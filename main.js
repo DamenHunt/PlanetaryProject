@@ -41,7 +41,6 @@ const moonGeo = new THREE.SphereGeometry(6);
 const moonMaterial = new THREE.MeshStandardMaterial({ color: 0xA9A9A9 });
 const moon = new THREE.Mesh(moonGeo, moonMaterial);
 const moonObj = new THREE.Object3D();
-moonObj.add(moon);
 earth.add(moonObj.add(moon));
 moon.position.set(50, 0, 0);
 
@@ -66,6 +65,13 @@ const saturnObj = new THREE.Object3D();
 saturnObj.add(saturn);
 saturn.position.set(1530, 0, 0); 
 
+const saturnRingGeo = new THREE.TorusGeometry(75, 20, 2, 100);
+const saturnRingMaterial = new THREE.MeshStandardMaterial({ color: 0xE6C77F });
+const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMaterial);
+const saturnRingObj = new THREE.Object3D();
+saturn.add(saturnRingObj.add(saturnRing));
+saturnRing.rotateX(180)
+
 const uranusGeo = new THREE.SphereGeometry(20);
 const uranusMaterial = new THREE.MeshStandardMaterial({ color: 0xA1E0E5  });
 const uranus = new THREE.Mesh(uranusGeo, uranusMaterial);
@@ -81,13 +87,13 @@ neptuneObj.add(neptune);
 neptune.position.set(1990, 0, 0); 
 
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2000);
-const ambientLight = new THREE.AmbientLight(0x273746, 0.5)
+const ambientLight = new THREE.AmbientLight(0x273746, 0.7)
 
 // const spaceTexture = new THREE.TextureLoader().load(''); // change the background img
 // scene.background = spaceTexture; // apply background to the scene
 
 function addStar() {
-    const starGeo = new THREE.SphereGeometry(2, 24, 24);
+    const starGeo = new THREE.SphereGeometry(1.5, 24, 24);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xfdfefe });
     const star = new THREE.Mesh(starGeo, starMaterial);
 
