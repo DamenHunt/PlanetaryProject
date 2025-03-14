@@ -154,6 +154,11 @@ scene.add(neptuneObj);
 scene.add(pointLight)
 scene.add(ambientLight)
 
+// camera
+camera.position.set(0, 1000, 2000);
+const control = new OrbitControls(camera, renderer.domElement);
+control.update();
+
 // render scene
 function animate() {
     sun.rotateX(0.0001);
