@@ -154,10 +154,6 @@ scene.add(neptuneObj);
 scene.add(pointLight)
 scene.add(ambientLight)
 
-// camera
-camera.position.set(0, 1000, 2000);
-const control = new OrbitControls(camera, renderer.domElement);
-control.update();
 
 // render scene
 function animate() {
@@ -177,7 +173,6 @@ function animate() {
     cameraPivot.getWorldPosition(target);
     camera.lookAt(target)
     
-
     renderer.render(scene, camera);
 }
 
