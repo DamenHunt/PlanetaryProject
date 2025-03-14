@@ -7,10 +7,6 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const control = new OrbitControls(camera, renderer.domElement);
-camera.position.set(0, 1000, 2000);
-control.update();
-
 // planet geometries
 const sunGeo = new THREE.SphereGeometry(300);
 const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
@@ -117,6 +113,11 @@ scene.add(jupiterObj);
 scene.add(saturnObj);
 scene.add(uranusObj);
 scene.add(neptuneObj);
+
+// camera
+camera.position.set(0, 1000, 2000);
+const control = new OrbitControls(camera, renderer.domElement);
+control.update();
 
 // render scene
 function animate() {
