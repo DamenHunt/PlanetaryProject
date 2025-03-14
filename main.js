@@ -7,10 +7,6 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const control = new OrbitControls(camera, renderer.domElement);
-camera.position.set(0, 1000, 2000);
-control.update();
-
 // planet geometries
 const sunGeo = new THREE.SphereGeometry(300);
 const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
@@ -93,7 +89,7 @@ const ambientLight = new THREE.AmbientLight(0x273746, 0.7)
 // scene.background = spaceTexture; // apply background to the scene
 
 function addStar() {
-    const starGeo = new THREE.SphereGeometry(1.5, 24, 24);
+    const starGeo = new THREE.SphereGeometry(3, 24, 24);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xfdfefe });
     const star = new THREE.Mesh(starGeo, starMaterial);
 
@@ -101,13 +97,49 @@ function addStar() {
     star.position.set(x, y, z);
     scene.add(star);
 }
-
 Array(200).fill().forEach(addStar);
 
-scene.add(pointLight)
-scene.add(ambientLight)
+// camera.position.set(0, 1000, 2000);
 
-// scene add
+camera.position.set(0, 200, 300);
+
+const control = new OrbitControls(camera, renderer.domElement);
+control.autoRotate= true;
+control.autoRotateSpeed = 0.8
+
+var target = new THREE.Vector3();
+const cameraPivot = new THREE.Object3D();
+cameraPivot.add(camera);
+cameraPivot.position.set(0, 0, 0)
+
+
+
+// const planetArray = [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
+
+// let count = 0;
+
+// function switchView() {
+    
+//     planetArray[count].add(cameraPivot);
+//     count++;
+//     console.log(count);
+
+//     if (count === planetArray.length) {
+//         count = 0;
+//     }
+// }
+
+// setInterval(switchView, 1000)
+
+
+// setInterval(() => {
+//     planetArray[count].add(cameraPivot);
+//     count = (count + 1) % planetArray.length; 
+// }, 1000)
+
+
+
+// add planets to scene
 scene.add(sun);
 scene.add(mercuryObj);
 scene.add(venusObj);
@@ -118,20 +150,28 @@ scene.add(saturnObj);
 scene.add(uranusObj);
 scene.add(neptuneObj);
 
+// add lights to scene
+scene.add(pointLight)
+scene.add(ambientLight)
+
 // render scene
 function animate() {
-
+    sun.rotateX(0.0001);
     mercuryObj.rotateY(0.0015);
     venusObj.rotateY(0.0012);
     earthObj.rotateY(0.001);
-        moonObj.rotateY(0.01)
+        moonObj.rotateY(0.001)
     marsObj.rotateY(0.0009);
     jupiterObj.rotateY(0.0007);
     saturnObj.rotateY(0.0005);
     uranusObj.rotateY(0.0003);
     neptuneObj.rotateY(0.0001);
 
-    sun.rotateX(0.0001);
+
+    control.update();
+    cameraPivot.getWorldPosition(target);
+    camera.lookAt(target)
+    
 
     renderer.render(scene, camera);
 }
