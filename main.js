@@ -88,7 +88,7 @@ function switchView() {
     } else if( planetArray[count] === saturn || planetArray[count] === jupiter ) {
         camera.position.set(0, 50, 150);
     } else if( planetArray[count] === uranus || planetArray[count] === neptune ) {
-        camera.position.set(0, 30, 75);
+        camera.position.set(0, 10, 75);
     } else if( planetArray[count] === venus || planetArray[count] === earth ) {
         camera.position.set(0, 40, 85);
     }
