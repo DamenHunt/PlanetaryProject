@@ -19,7 +19,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const { sun, sunObj }  = sunMesh();
+const { sunGeo, sun, sunObj }  = sunMesh();
 const { mercuryGeo, mercury, mercuryObj } = mercuryMesh();
 const { venusGeo, venus, venusObj } = venusMesh();
 const { earthGeo, earth, earthObj } = earthMesh();
