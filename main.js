@@ -1,123 +1,39 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+import sunMesh from './planets/sun.module.js';
+import mercuryMesh from './planets/mercury.module.js';
+import venusMesh from './planets/venus.module.js';
+import earthMesh from './planets/earth.module.js';
+import moonMesh from './planets/moon.module.js';
+import marsMesh from './planets/mars.module.js';
+import jupiterMesh from './planets/jupiter.module.js';
+import saturnMesh from './planets/saturn.module.js';
+import saturnRingMesh from './planets/saturn-ring.module.js';
+import uranusMesh from './planets/uranus.module.js';
+import neptuneMesh from './planets/neptune.module.js';
+// import { switchView } from './utils/slideshow.module.js';
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+const { sun, sunObj }  = sunMesh();
+const { mercuryGeo, mercury, mercuryObj } = mercuryMesh();
+const { venusGeo, venus, venusObj } = venusMesh();
+const { earthGeo, earth, earthObj } = earthMesh();
+const { moonGeo, moon, moonObj } = moonMesh();
+    earth.add(moonObj.add(moon));
+const { marsGeo, mars, marsObj } = marsMesh();
+const { jupiterGeo, jupiter, jupiterObj } = jupiterMesh();
+const { saturnGeo, saturn, saturnObj } = saturnMesh();
+const { saturnRingGeo, saturnRing, saturnRingObj } = saturnRingMesh();
+    saturn.add(saturnRingObj.add(saturnRing));
+const { uranusGeo, uranus, uranusObj } = uranusMesh();
+const { neptuneGeo, neptune, neptuneObj } = neptuneMesh();
 
-// textures 
-const mercuryTexture = new THREE.TextureLoader().load('textures/mercury-texture.jpg');
-const venusTexture = new THREE.TextureLoader().load('textures/venus-texture.jpg');
-const earthTexture = new THREE.TextureLoader().load('textures/earth-texture.jpg');
-const moonTexture = new THREE.TextureLoader().load('textures/moon-texture.jpg');
-const marsTexture = new THREE.TextureLoader().load('textures/mars-texture.jpg');
-const jupiterTexture = new THREE.TextureLoader().load('textures/jupiter-texture.jpg');
-const saturnTexture = new THREE.TextureLoader().load('textures/saturn-texture.jpg');
-const uranusTexture = new THREE.TextureLoader().load('textures/uranus-texture.jpg');
-const neptuneTexture = new THREE.TextureLoader().load('textures/neptune-texture.jpg');
-
-// planet geometries
-const sunGeo = new THREE.SphereGeometry(300, 100, 100);
-const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
-const sun = new THREE.Mesh(sunGeo, sunMaterial);
-const sunObj = new THREE.Object3D();
-sunObj.add(sun);
-sun.position.set(0, 0, 0);
-
-const mercuryGeo = new THREE.SphereGeometry(8, 100, 100);
-const mercuryMaterial = new THREE.MeshStandardMaterial({ 
-    map: mercuryTexture,
-});
-const mercury = new THREE.Mesh(mercuryGeo, mercuryMaterial);
-const mercuryObj = new THREE.Object3D();
-mercuryObj.add(mercury);
-mercury.position.set(530, 0, 0);
-
-const venusGeo = new THREE.SphereGeometry(20, 100, 100);
-const venusMaterial = new THREE.MeshStandardMaterial({ 
-    map: venusTexture,
-});
-const venus = new THREE.Mesh(venusGeo, venusMaterial);
-const venusObj = new THREE.Object3D();
-venusObj.add(venus);
-venus.position.set(760, 0, 0);
-
-const earthGeo = new THREE.SphereGeometry(25, 100, 100);
-const earthMaterial = new THREE.MeshStandardMaterial({ 
-    map: earthTexture,
-});
-const earth = new THREE.Mesh(earthGeo, earthMaterial);
-const earthObj = new THREE.Object3D();
-earthObj.add(earth);
-earth.position.set(990, 0, 0);
-
-const moonGeo = new THREE.SphereGeometry(6, 100, 100);
-const moonMaterial = new THREE.MeshStandardMaterial({ 
-    map: moonTexture,
-});
-const moon = new THREE.Mesh(moonGeo, moonMaterial);
-const moonObj = new THREE.Object3D();
-earth.add(moonObj.add(moon));
-moon.position.set(65, 0, 0);
-moon.rotateY(3)
-
-const marsGeo = new THREE.SphereGeometry(10, 100, 100);
-const marsMaterial = new THREE.MeshStandardMaterial({ 
-    map: marsTexture,
-});
-const mars = new THREE.Mesh(marsGeo, marsMaterial);
-const marsObj = new THREE.Object3D();
-marsObj.add(mars);
-mars.position.set(1220, 0, 0); 
-
-const jupiterGeo = new THREE.SphereGeometry(60, 100, 100);
-const jupiterMaterial = new THREE.MeshStandardMaterial({ 
-    map: jupiterTexture,
-});
-const jupiter = new THREE.Mesh(jupiterGeo, jupiterMaterial);
-const jupiterObj = new THREE.Object3D();
-jupiterObj.add(jupiter);
-jupiter.position.set(1450, 0, 0); 
-
-const saturnGeo = new THREE.SphereGeometry(45, 100, 100);
-const saturnMaterial = new THREE.MeshStandardMaterial({ 
-    map: saturnTexture,
-});
-const saturn = new THREE.Mesh(saturnGeo, saturnMaterial);
-const saturnObj = new THREE.Object3D();
-saturnObj.add(saturn);
-saturn.position.set(1680, 0, 0);
-
-const saturnRingGeo = new THREE.TorusGeometry(75, 20, 2, 400);
-const saturnRingMaterial = new THREE.MeshStandardMaterial({ 
-    color: 0xE6D8AD
-});
-const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMaterial);
-const saturnRingObj = new THREE.Object3D();
-saturn.add(saturnRingObj.add(saturnRing));
-saturnRingGeo.rotateX(1.3)
-saturnRingGeo.rotateY(0.9)
-
-const uranusGeo = new THREE.SphereGeometry(20, 100, 100);
-const uranusMaterial = new THREE.MeshStandardMaterial({ 
-    map: uranusTexture,
-});
-const uranus = new THREE.Mesh(uranusGeo, uranusMaterial);
-const uranusObj = new THREE.Object3D();
-uranusObj.add(uranus);
-uranus.position.set(1910, 0, 0); 
-
-const neptuneGeo = new THREE.SphereGeometry(20, 100, 100);
-const neptuneMaterial = new THREE.MeshStandardMaterial({ 
-    map: neptuneTexture,
-});
-const neptune = new THREE.Mesh(neptuneGeo, neptuneMaterial);
-const neptuneObj = new THREE.Object3D();
-neptuneObj.add(neptune);
-neptune.position.set(2140, 0, 0); 
 
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2000);
 const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
@@ -137,7 +53,7 @@ camera.position.set(0, 1000, 2200);
 
 const control = new OrbitControls(camera, renderer.domElement);
 control.autoRotate= true;
-control.autoRotateSpeed = 1
+control.autoRotateSpeed = 1.2
 
 var target = new THREE.Vector3();
 const cameraPivot = new THREE.Object3D();
@@ -157,35 +73,35 @@ const planetArray = [
 ];
 
 var count = 0;
-planetArray[count].add(cameraPivot); // Initially attach cameraPivot to the first planet (sun)
-
+planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
 function switchView() {
-
-    planetArray[count].remove(cameraPivot); // Remove cameraPivot from the current planet
-    count++;
-    console.log(count);
+    planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
+        count++;
+        console.log(count);
     if ( count === planetArray.length ) {
         count = 0;
     }
     if ( planetArray[count] === sun ) {
         camera.position.set(0, 1000, 2200);
-    } else if( planetArray[count] === mercury || planetArray[count] === mars || planetArray[count] === uranus ) {
-        camera.position.set(0, 50, 70);
+    } else if( planetArray[count] === mercury || planetArray[count] === mars ) {
+        camera.position.set(0, 10, 35);
     } else if( planetArray[count] === saturn || planetArray[count] === jupiter ) {
-        camera.position.set(0, 50, 250);
-    } else {
-        camera.position.set(0, 50, 120);
+        camera.position.set(0, 50, 150);
+    } else if( planetArray[count] === uranus || planetArray[count] === neptune ) {
+        camera.position.set(0, 30, 75);
+    } else if( planetArray[count] === venus || planetArray[count] === earth ) {
+        camera.position.set(0, 40, 85);
     }
 
-    planetArray[count].add(cameraPivot); // Attach cameraPivot to the new planet
-}
+     planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
+ }
 
-setInterval(switchView, 20000);
 
-// sun.add(cameraPivot)
+ setInterval(switchView, 10000);
+
 
 // add planets to scene
-scene.add(sun);
+scene.add(sunObj); // <--- change back to 'sun' to have its correct cameraPivot view
 scene.add(mercuryObj);
 scene.add(venusObj);
 scene.add(earthObj);
@@ -201,7 +117,8 @@ scene.add(ambientLight)
 
 // render scene
 function animate() {
-    
+
+    // planets orbiting speed around the sun
     sunObj.rotateX(0.0001);
     mercuryObj.rotateY(0.0015);
     venusObj.rotateY(0.0012);
@@ -213,16 +130,15 @@ function animate() {
     uranusObj.rotateY(0.0003);
     neptuneObj.rotateY(0.0001);
 
-    
+    // planets rotation on their own axis
     mercuryGeo.rotateY(.002)
     venusGeo.rotateY(-.0025)
     earthGeo.rotateY(.0035)
     marsGeo.rotateY(.003)
-    jupiterGeo.rotateY(.007)
+    jupiterGeo.rotateY(.0065)
     saturnGeo.rotateY(.006)
     uranusGeo.rotateX(.006)
     neptuneGeo.rotateY(.009)
-
 
     control.update();
     cameraPivot.getWorldPosition(target);
