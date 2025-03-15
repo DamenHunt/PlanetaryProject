@@ -12,7 +12,6 @@ import saturnMesh from './planets/saturn.module.js';
 import saturnRingMesh from './planets/saturn-ring.module.js';
 import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
-// import { switchView } from './utils/slideshow.module.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
@@ -29,17 +28,30 @@ const { moonGeo, moon, moonObj } = moonMesh();
 const { marsGeo, mars, marsObj } = marsMesh();
 const { jupiterGeo, jupiter, jupiterObj } = jupiterMesh();
 const { saturnGeo, saturn, saturnObj } = saturnMesh();
-const { saturnRingGeo, saturnRing, saturnRingObj } = saturnRingMesh();
+const { 
+saturnRingGeo, 
+saturnRing, 
+saturnRingObj,
+saturnRingGeo2, 
+saturnRingMaterial2, 
+saturnRing2, 
+saturnRingObj2,
+saturnRingGeo3, 
+saturnRingMaterial3, 
+saturnRing3, 
+saturnRingObj3  
+} = saturnRingMesh();
     saturn.add(saturnRingObj.add(saturnRing));
+    saturn.add(saturnRingObj2.add(saturnRing2));
+    saturn.add(saturnRingObj3.add(saturnRing3));
 const { uranusGeo, uranus, uranusObj } = uranusMesh();
 const { neptuneGeo, neptune, neptuneObj } = neptuneMesh();
-
 
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2000);
 const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
 
 function addStar() {
-    const starGeo = new THREE.SphereGeometry(3, 24, 24);
+    const starGeo = new THREE.SphereGeometry(3, 2, 2);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xfdfefe });
     const star = new THREE.Mesh(starGeo, starMaterial);
 
@@ -47,7 +59,8 @@ function addStar() {
     star.position.set(x, y, z);
     scene.add(star);
 }
-Array(200).fill().forEach(addStar);
+
+Array(150).fill().forEach(addStar);
 
 camera.position.set(0, 1000, 2200);
 
@@ -58,7 +71,7 @@ control.autoRotateSpeed = 1.2
 var target = new THREE.Vector3();
 const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
-cameraPivot.position.set(0, 0, 0)
+cameraPivot.position.set(0, 0, 0);
 
 const planetArray = [
     sun, 
@@ -83,37 +96,40 @@ function switchView() {
     }
     if ( planetArray[count] === sun ) {
         camera.position.set(0, 1000, 2200);
-    } else if( planetArray[count] === mercury || planetArray[count] === mars ) {
+    } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
         camera.position.set(0, 10, 35);
-    } else if( planetArray[count] === saturn || planetArray[count] === jupiter ) {
+    } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
         camera.position.set(0, 50, 150);
-    } else if( planetArray[count] === uranus || planetArray[count] === neptune ) {
+    } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
         camera.position.set(0, 10, 75);
-    } else if( planetArray[count] === venus || planetArray[count] === earth ) {
+    } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
         camera.position.set(0, 40, 85);
     }
 
      planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
  }
+setInterval(switchView, 10000);
 
+// saturn.add(cameraPivot)
 
- setInterval(switchView, 10000);
+const addToScene = [
+    sunObj, 
+    mercuryObj, 
+    venusObj, 
+    earthObj, 
+    marsObj, 
+    jupiterObj, 
+    saturnObj, 
+    uranusObj, 
+    neptuneObj
+]
 
-
-// add planets to scene
-scene.add(sunObj); // <--- change back to 'sun' to have its correct cameraPivot view
-scene.add(mercuryObj);
-scene.add(venusObj);
-scene.add(earthObj);
-scene.add(marsObj);
-scene.add(jupiterObj);
-scene.add(saturnObj);
-scene.add(uranusObj);
-scene.add(neptuneObj);
+addToScene.map((planet) => {
+    scene.add(planet);
+});
 
 // add lights to scene
-scene.add(pointLight)
-scene.add(ambientLight)
+scene.add(pointLight, ambientLight)
 
 // render scene
 function animate() {
