@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
-
+let x = 1.47;
+let y = 1.7;
+let z = 0.3;
 
 function saturnRingMesh() {
 
@@ -11,8 +13,9 @@ function saturnRingMesh() {
     });
     const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMaterial);
     const saturnRingObj = new THREE.Object3D();
-    saturnRingGeo.rotateX(1.3);
-    saturnRingGeo.rotateY(0.9);
+    saturnRingGeo.rotateX(x);
+    saturnRingGeo.rotateY(y);
+    saturnRingGeo.rotateZ(z);
 
     const saturnRingGeo2 = new THREE.TorusGeometry(64, 5, 2, 150);
     const saturnRingMaterial2 = new THREE.MeshStandardMaterial({ 
@@ -21,8 +24,9 @@ function saturnRingMesh() {
     });
     const saturnRing2 = new THREE.Mesh(saturnRingGeo2, saturnRingMaterial2);
     const saturnRingObj2 = new THREE.Object3D();
-    saturnRingGeo2.rotateX(1.3);
-    saturnRingGeo2.rotateY(0.9);
+    saturnRingGeo2.rotateX(x);
+    saturnRingGeo2.rotateY(y);
+    saturnRingGeo2.rotateZ(z);
 
     const saturnRingGeo3 = new THREE.TorusGeometry(75, 5, 2, 150);
     const saturnRingMaterial3 = new THREE.MeshStandardMaterial({ 
@@ -31,8 +35,9 @@ function saturnRingMesh() {
     });
     const saturnRing3 = new THREE.Mesh(saturnRingGeo3, saturnRingMaterial3);
     const saturnRingObj3 = new THREE.Object3D();
-    saturnRingGeo3.rotateX(1.3);
-    saturnRingGeo3.rotateY(0.9);
+    saturnRingGeo3.rotateX(x);
+    saturnRingGeo3.rotateY(y);
+    saturnRingGeo3.rotateZ(z);
     
     return { 
         saturnRingGeo, 
@@ -51,9 +56,4 @@ function saturnRingMesh() {
 
 }
 
-
 export default saturnRingMesh;
-
-// 0xF7DfAD
-// 0xDFCA9E
-// 0xC2B290
