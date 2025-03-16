@@ -9,9 +9,10 @@ import moonMesh from './planets/moon.module.js';
 import marsMesh from './planets/mars.module.js';
 import jupiterMesh from './planets/jupiter.module.js';
 import saturnMesh from './planets/saturn.module.js';
-import saturnRingMesh from './planets/saturn-ring.module.js';
+import saturnRingMesh from './planets/saturnRing.module.js';
 import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
+import uranusRingMesh from './planets/uranusRing.module.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
@@ -45,6 +46,8 @@ saturnRingObj3
     saturn.add(saturnRingObj2.add(saturnRing2));
     saturn.add(saturnRingObj3.add(saturnRing3));
 const { uranusGeo, uranus, uranusObj } = uranusMesh();
+const { uranusRingGeo, uranusRing, uranusRingObj } = uranusRingMesh();
+    uranus.add(uranusRingObj.add(uranusRing));
 const { neptuneGeo, neptune, neptuneObj } = neptuneMesh();
 
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2000);
@@ -60,7 +63,7 @@ function addStar() {
     scene.add(star);
 }
 
-Array(150).fill().forEach(addStar);
+Array(200).fill().forEach(addStar);
 
 const control = new OrbitControls(camera, renderer.domElement);
 control.autoRotate= true;
@@ -130,6 +133,32 @@ addToScene.map((planet) => {
 
 // add lights to scene
 scene.add(pointLight, ambientLight)
+
+// draw orbit outline for each planet
+planetArray.map((planet) => {
+
+    let radius = planet.position.x
+    const segments = 500;
+    const points = [];
+
+    for (let i = 0; i <= segments; i++) {
+        const theta = (i / segments) * Math.PI * 2;
+        points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
+    }
+
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.05
+    });
+    const circleOutline = new THREE.LineLoop(geometry, material);
+
+    circleOutline.rotateX(-Math.PI/2)
+    scene.add(circleOutline);
+
+});
+
 
 // render scene
 function animate() {

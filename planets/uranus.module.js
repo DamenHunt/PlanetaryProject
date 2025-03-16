@@ -11,7 +11,8 @@ function uranusMesh() {
     const uranus = new THREE.Mesh(uranusGeo, uranusMaterial);
     const uranusObj = new THREE.Object3D();
     uranusObj.add(uranus);
-    uranus.position.set(1910, 0, 0); 
+    uranus.position.set(2210, 0, 0);
+    uranusGeo.rotateZ(Math.PI/2)
 
     return { uranusGeo, uranusMaterial, uranus, uranusObj }
 

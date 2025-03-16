@@ -11,7 +11,7 @@ function neptuneMesh() {
     const neptune = new THREE.Mesh(neptuneGeo, neptuneMaterial);
     const neptuneObj = new THREE.Object3D();
     neptuneObj.add(neptune);
-    neptune.position.set(2140, 0, 0); 
+    neptune.position.set(2440, 0, 0); 
 
     return { neptuneGeo, neptuneMaterial, neptune, neptuneObj }
 

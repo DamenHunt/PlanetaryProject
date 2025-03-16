@@ -11,7 +11,7 @@ function jupiterMesh() {
     const jupiter = new THREE.Mesh(jupiterGeo, jupiterMaterial);
     const jupiterObj = new THREE.Object3D();
     jupiterObj.add(jupiter);
-    jupiter.position.set(1450, 0, 0); 
+    jupiter.position.set(1750, 0, 0); 
 
     return { jupiterGeo, jupiterMaterial, jupiter, jupiterObj }
 

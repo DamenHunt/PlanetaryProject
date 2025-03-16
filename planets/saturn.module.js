@@ -11,7 +11,7 @@ function saturnMesh() {
     const saturn = new THREE.Mesh(saturnGeo, saturnMaterial);
     const saturnObj = new THREE.Object3D();
     saturnObj.add(saturn);
-    saturn.position.set(1680, 0, 0);
+    saturn.position.set(1980, 0, 0);
 
     return { saturnGeo, saturnMaterial, saturn, saturnObj }
 
