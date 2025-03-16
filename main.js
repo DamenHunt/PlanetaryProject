@@ -12,6 +12,7 @@ import saturnMesh from './planets/saturn.module.js';
 import saturnRingMesh from './planets/saturn-ring.module.js';
 import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
+import { pingpong } from 'three/src/math/MathUtils.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
@@ -62,55 +63,57 @@ function addStar() {
 
 Array(150).fill().forEach(addStar);
 
-camera.position.set(0, 1000, 2200);
+
 
 const control = new OrbitControls(camera, renderer.domElement);
-control.autoRotate= true;
-control.autoRotateSpeed = 1.2
+// control.autoRotate= true;
+// control.autoRotateSpeed = 1.2
 
 var target = new THREE.Vector3();
 const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
 cameraPivot.position.set(0, 0, 0);
 
-const planetArray = [
-    sun, 
-    mercury, 
-    venus, 
-    earth, 
-    mars, 
-    jupiter, 
-    saturn, 
-    uranus, 
-    neptune
-];
+camera.position.set(0, 1000, 2200);
 
-var count = 0;
-planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
-function switchView() {
-    planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
-        count++;
-        console.log(count);
-    if ( count === planetArray.length ) {
-        count = 0;
-    }
-    if ( planetArray[count] === sun ) {
-        camera.position.set(0, 1000, 2200);
-    } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
-        camera.position.set(0, 10, 35);
-    } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
-        camera.position.set(0, 50, 150);
-    } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
-        camera.position.set(0, 10, 75);
-    } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
-        camera.position.set(0, 40, 85);
-    }
+// const planetArray = [
+//     sun, 
+//     mercury, 
+//     venus, 
+//     earth, 
+//     mars, 
+//     jupiter, 
+//     saturn, 
+//     uranus, 
+//     neptune
+// ];
 
-     planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
- }
-setInterval(switchView, 10000);
+// var count = 0;
+// planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
+// function switchView() {
+//     planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
+//         count++;
+//         console.log(count);
+//     if ( count === planetArray.length ) {
+//         count = 0;
+//     }
+//     if ( planetArray[count] === sun ) {
+//         camera.position.set(0, 1000, 2200);
+//     } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
+//         camera.position.set(0, 10, 35);
+//     } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
+//         camera.position.set(0, 50, 150);
+//     } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
+//         camera.position.set(0, 10, 75);
+//     } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
+        // camera.position.set(0, 40, 85);
+//     }
 
-// saturn.add(cameraPivot)
+//      planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
+//  }
+// setInterval(switchView, 10000);
+
+sun.add(cameraPivot)
 
 const addToScene = [
     sunObj, 
@@ -131,11 +134,52 @@ addToScene.map((planet) => {
 // add lights to scene
 scene.add(pointLight, ambientLight)
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const loopTime = 1;
+const earthOrbitSpeed = 0.0001;
+const moonOrbitRadius = 100;
+const moonOrbitSpeed = 30;
+
+
+const curve = new THREE.EllipseCurve(
+    0,0,
+    1000, 1150,
+    0, 2*Math.PI,
+);
+
+
+const points = curve.getSpacedPoints(200)
+const geometry = new THREE.BufferGeometry().setFromPoints(points)
+const material = new THREE.LineBasicMaterial({ color: 0x333333, transparent: true, opacity: 0.5 })
+const orbit = new THREE.Line(geometry, material)
+orbit.rotateX(-Math.PI/2)
+scene.add(orbit)
+
+
+const fakeEarthGeo = new THREE.SphereGeometry(50, 50, 50)
+const fakeEarthMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+const fakeEarth = new THREE.Mesh(fakeEarthGeo, fakeEarthMaterial)
+
+const fakeMoonGeo = new THREE.SphereGeometry(20, 20, 20)
+const fakeMoonMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+const fakeMoon = new THREE.Mesh(fakeMoonGeo, fakeMoonMaterial)
+const fakeMoonObj = new THREE.Object3D();
+// fakeMoon.position.set(150, 0, 0);
+fakeEarth.add(fakeMoonObj.add(fakeMoon));
+
+scene.add(fakeEarth)
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // render scene
 function animate() {
 
     // planets orbiting speed around the sun
-    sunObj.rotateX(0.0001);
+    // sunObj.rotateX(0.0001);
     mercuryObj.rotateY(0.0015);
     venusObj.rotateY(0.0012);
     earthObj.rotateY(0.001);
@@ -160,7 +204,28 @@ function animate() {
     cameraPivot.getWorldPosition(target);
     camera.lookAt(target)
     
-    renderer.render(scene, camera);
+    
+///////////////////////////////////////////////////
+
+    const time = earthOrbitSpeed * Date.now();
+    const t = (time % loopTime) / loopTime
+
+    let p = curve .getPoint(t)
+    console.log(p, t)
+
+    fakeEarth.position.x = p.x;
+    fakeEarth.position.z = p.y;
+
+    fakeMoon.position.x = -Math.cos(time * moonOrbitSpeed) * moonOrbitRadius;
+    fakeMoon.position.z = -Math.sin(time * moonOrbitSpeed) * moonOrbitRadius;
+
+///////////////////////////////////////////////////
+
+renderer.render(scene, camera);
 }
 
 renderer.setAnimationLoop(animate);
+
+
+
+

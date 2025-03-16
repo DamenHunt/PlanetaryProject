@@ -12,7 +12,7 @@ function earthMesh() {
     const earthObj = new THREE.Object3D();
     earthObj.add(earth);
     earth.position.set(990, 0, 0);
-
+    // earthGeo.rotateZ(-0.41)
     return { earthGeo, earthMaterial, earth, earthObj }
 
 }
