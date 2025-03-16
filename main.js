@@ -12,7 +12,6 @@ import saturnMesh from './planets/saturn.module.js';
 import saturnRingMesh from './planets/saturn-ring.module.js';
 import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
-import { pingpong } from 'three/src/math/MathUtils.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
