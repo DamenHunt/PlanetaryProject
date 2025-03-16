@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 let x = 1.47;
 let y = 1.7;
-let z = 0.3;
+let z = 0.1;
 
 function saturnRingMesh() {
 

@@ -63,8 +63,6 @@ function addStar() {
 
 Array(150).fill().forEach(addStar);
 
-
-
 const control = new OrbitControls(camera, renderer.domElement);
 control.autoRotate= true;
 control.autoRotateSpeed = 1.2
