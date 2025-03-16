@@ -74,46 +74,46 @@ const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
 cameraPivot.position.set(0, 0, 0);
 
-// camera.position.set(0, 1000, 2200);
+camera.position.set(0, 1000, 2200);
 
-// const planetArray = [
-//     sun, 
-//     mercury, 
-//     venus, 
-//     earth, 
-//     mars, 
-//     jupiter, 
-//     saturn, 
-//     uranus, 
-//     neptune
-// ];
+const planetArray = [
+    sun, 
+    mercury, 
+    venus, 
+    earth, 
+    mars, 
+    jupiter, 
+    saturn, 
+    uranus, 
+    neptune
+];
 
-// var count = 0;
-// planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
-// function switchView() {
-//     planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
-//         count++;
-//         console.log(count);
-//     if ( count === planetArray.length ) {
-//         count = 0;
-//     }
-//     if ( planetArray[count] === sun ) {
-//         camera.position.set(0, 1000, 2200);
-//     } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
-//         camera.position.set(0, 10, 35);
-//     } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
+var count = 0;
+planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
+function switchView() {
+    planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
+        count++;
+        console.log(count);
+    if ( count === planetArray.length ) {
+        count = 0;
+    }
+    if ( planetArray[count] === sun ) {
+        camera.position.set(0, 1000, 2200);
+    } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
+        camera.position.set(0, 10, 35);
+    } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
         camera.position.set(0, 50, 150);
-//     } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
-//         camera.position.set(0, 10, 75);
-//     } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
-//         camera.position.set(0, 40, 85);
-//     }
+    } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
+        camera.position.set(0, 10, 75);
+    } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
+        camera.position.set(0, 40, 85);
+    }
 
-//      planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
-//  }
-// setInterval(switchView, 10000);
+     planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
+ }
+setInterval(switchView, 10000);
 
-saturn.add(cameraPivot)
+// saturn.add(cameraPivot)
 
 const addToScene = [
     sunObj, 
