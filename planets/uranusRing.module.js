@@ -13,6 +13,7 @@ function uranusRingMesh() {
         const uranusRing = new THREE.Mesh(uranusRingGeo, uranusRingMaterial);
         const uranusRingObj = new THREE.Object3D();
         uranusRingGeo.rotateY(Math.PI/2);
+        uranusRingGeo.rotateZ(-0.25)
 
     return { uranusRingGeo, uranusRingMaterial, uranusRing, uranusRingObj }
 

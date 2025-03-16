@@ -50,8 +50,6 @@ const { uranusRingGeo, uranusRing, uranusRingObj } = uranusRingMesh();
     uranus.add(uranusRingObj.add(uranusRing));
 const { neptuneGeo, neptune, neptuneObj } = neptuneMesh();
 
-const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2000);
-const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
 
 function addStar() {
     const starGeo = new THREE.SphereGeometry(3, 2, 2);
@@ -66,8 +64,10 @@ function addStar() {
 Array(200).fill().forEach(addStar);
 
 const control = new OrbitControls(camera, renderer.domElement);
-control.autoRotate= true;
-control.autoRotateSpeed = 1.2
+    control.autoRotate= true;
+    control.autoRotateSpeed = 1.2;
+    control.enableDamping = true;
+    control.saveState()
 
 var target = new THREE.Vector3();
 const cameraPivot = new THREE.Object3D();
@@ -88,30 +88,41 @@ const planetArray = [
     neptune
 ];
 
-var count = 0;
-planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
-function switchView() {
-    planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
-        count++;
-        console.log(count);
-    if ( count === planetArray.length ) {
-        count = 0;
-    }
-    if ( planetArray[count] === sun ) {
-        camera.position.set(0, 1000, 2200);
-    } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
-        camera.position.set(0, 10, 35);
-    } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
-        camera.position.set(0, 50, 150);
-    } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
-        camera.position.set(0, 10, 75);
-    } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
-        camera.position.set(0, 40, 85);
-    }
+// create slide show for viewing different planets
+const slideShowContainer = document.getElementById('slide-show-container')
+const slideShowBtn = document.getElementById('slide-show-btn');
+slideShowBtn.addEventListener('click', () => {
 
-     planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
- }
-setInterval(switchView, 10000);
+    slideShowContainer.style.visibility = 'hidden';
+
+    var count = 0;
+    planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
+    function switchView() {
+        planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
+            count++;
+            console.log(count);
+        if ( count === planetArray.length ) {
+            count = 0;
+            // return camera.position.set(0, 1000, 2200);
+        }
+        if ( planetArray[count] === sun ) {
+            camera.position.set(0, 1000, 2200);
+        } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
+            camera.position.set(0, 10, 35);
+        } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
+            camera.position.set(0, 50, 150);
+        } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
+            camera.position.set(0, 10, 75);
+        } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
+            camera.position.set(0, 40, 85);
+        }
+
+        planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
+    }
+    setInterval(switchView, 10000);
+
+});
+
 
 // saturn.add(cameraPivot)
 
@@ -132,30 +143,44 @@ addToScene.map((planet) => {
 });
 
 // add lights to scene
+// const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
+const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2200);
+const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
+
 scene.add(pointLight, ambientLight)
 
+
 // draw orbit outline for each planet
-planetArray.map((planet) => {
+const showGridContainer = document.getElementById('show-grid-container');
+const showGridBtn = document.getElementById('show-grid-btn');
 
-    let radius = planet.position.x
-    const segments = 500;
-    const points = [];
+showGridBtn.addEventListener('click', () => {
 
-    for (let i = 0; i <= segments; i++) {
-        const theta = (i / segments) * Math.PI * 2;
-        points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
-    }
+    showGridContainer.style.visibility = 'hidden';
 
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({ 
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.05
+    planetArray.map((planet) => {
+
+        let radius = planet.position.x
+        const segments = 1000;
+        const points = [];
+
+        for (let i = 0; i <= segments; i++) {
+            const theta = (i / segments) * Math.PI * 2;
+            points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
+        }
+
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ 
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.05
+        });
+        const circleOutline = new THREE.LineLoop(geometry, material);
+
+        circleOutline.rotateX(-Math.PI/2)
+        scene.add(circleOutline);
+
     });
-    const circleOutline = new THREE.LineLoop(geometry, material);
-
-    circleOutline.rotateX(-Math.PI/2)
-    scene.add(circleOutline);
 
 });
 

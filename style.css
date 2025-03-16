@@ -2,14 +2,59 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
+    position: relative;
 }
 
-#form {
+#slide-show-container {
     position: absolute;
-    width: 700px;
-    height: 100vh;
-    background-color: darkblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 70px;
+    /* background-color: green; */
     z-index: 200;
-    right: 0px;
-    opacity: 20%;
+    opacity: 100%;
+    bottom: 25px;
+    right: 25px;
+    visibility: visible;
 }
+
+#slide-show-btn {
+    width: 55px;
+    opacity: 30%;
+}
+
+#slide-show-btn:hover {
+    width: 60px;
+    opacity: 70%;
+    cursor: pointer;
+}
+
+#show-grid-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 70px;
+    /* background-color: blue; */
+    z-index: 200;
+    opacity: 100%;
+    bottom: 100px;
+    right: 25px;
+    visibility: visible;
+}
+
+#show-grid-btn {
+    width: 45px;
+    opacity: 30%;
+}
+
+#show-grid-btn:hover {
+    width: 50px;
+    opacity: 70%;
+    cursor: pointer;
+}
+
+

@@ -2,16 +2,20 @@ import * as THREE from 'three';
 
 let x = -Math.PI/2;
 let y = -Math.PI/2;
-let z = 0.3;
+let z = 0.4;
+
+const ringOneColor = 0xc4b290;
+const ringTwoColor = 0xead4a4;
+const ringThreeColor = 0xbeaf8f;
 
 function saturnRingMesh() {
 
     const saturnRingGeo = new THREE.TorusGeometry(53, 5, 2, 150);
     const saturnRingMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0xa4967a,
+        color: ringOneColor,
         flatShading: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.95
     });
     const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMaterial);
     const saturnRingObj = new THREE.Object3D();
@@ -21,10 +25,10 @@ function saturnRingMesh() {
 
     const saturnRingGeo2 = new THREE.TorusGeometry(64, 5, 2, 150);
     const saturnRingMaterial2 = new THREE.MeshStandardMaterial({ 
-        color: 0xead4a4,
+        color: ringTwoColor,
         flatShading: true,
         transparent: true,
-        opacity: 0.9
+        opacity: 0.85
     });
     const saturnRing2 = new THREE.Mesh(saturnRingGeo2, saturnRingMaterial2);
     const saturnRingObj2 = new THREE.Object3D();
@@ -34,10 +38,10 @@ function saturnRingMesh() {
 
     const saturnRingGeo3 = new THREE.TorusGeometry(75, 5, 2, 150);
     const saturnRingMaterial3 = new THREE.MeshStandardMaterial({ 
-        color: 0xC2B290,
+        color: ringThreeColor,
         flatShading: true,
         transparent: true,
-        opacity: 1
+        opacity: 0.75
     });
     const saturnRing3 = new THREE.Mesh(saturnRingGeo3, saturnRingMaterial3);
     const saturnRingObj3 = new THREE.Object3D();
