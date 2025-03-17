@@ -56,7 +56,7 @@ function addStar() {
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xfdfefe });
     const star = new THREE.Mesh(starGeo, starMaterial);
 
-    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(10000))
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(10000));
     star.position.set(x, y, z);
     scene.add(star);
 }
@@ -67,14 +67,15 @@ const control = new OrbitControls(camera, renderer.domElement);
     control.autoRotate= true;
     control.autoRotateSpeed = 1.2;
     control.enableDamping = true;
-    control.saveState()
 
-var target = new THREE.Vector3();
+
+var target = new THREE.Vector3(); // to store the coordinates of an object to allow camera to track pivot around
+
 const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
 cameraPivot.position.set(0, 0, 0);
 
-camera.position.set(0, 1000, 2200);
+camera.position.set(0, 1000, 2400);
 
 const planetArray = [
     sun, 
@@ -89,21 +90,27 @@ const planetArray = [
 ];
 
 // create slide show for viewing different planets
-const slideShowContainer = document.getElementById('slide-show-container')
+const slideShowContainer = document.getElementById('slide-show-container');
 const slideShowBtn = document.getElementById('slide-show-btn');
+const slideShowCloseBtn = document.getElementById('slide-show-close-btn');
+
+let slideShow;
+
 slideShowBtn.addEventListener('click', () => {
 
-    slideShowContainer.style.visibility = 'hidden';
+    camera.position.set(0, -600, 800);
+
+    slideShowBtn.style.display = 'none';
+    slideShowCloseBtn.style.display = 'flex';
 
     var count = 0;
-    planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet (sun)
+    planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet
     function switchView() {
         planetArray[count].remove(cameraPivot); // remove cameraPivot from the current planet
             count++;
-            console.log(count);
+            // console.log(count);
         if ( count === planetArray.length ) {
             count = 0;
-            // return camera.position.set(0, 1000, 2200);
         }
         if ( planetArray[count] === sun ) {
             camera.position.set(0, 1000, 2200);
@@ -119,12 +126,19 @@ slideShowBtn.addEventListener('click', () => {
 
         planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
     }
-    setInterval(switchView, 10000);
+    slideShow = setInterval(switchView, 10000);
 
 });
 
+slideShowCloseBtn.addEventListener('click', () => {
+    slideShowBtn.style.display = 'flex';
+    slideShowCloseBtn.style.display = 'none';
+    clearInterval(slideShow);
+    camera.position.set(0, 1000, 2200);
+    sun.add(cameraPivot);
+});
 
-// saturn.add(cameraPivot)
+// saturn.add(cameraPivot);
 
 const addToScene = [
     sunObj, 
@@ -136,7 +150,7 @@ const addToScene = [
     saturnObj, 
     uranusObj, 
     neptuneObj
-]
+];
 
 addToScene.map((planet) => {
     scene.add(planet);
@@ -147,16 +161,20 @@ addToScene.map((planet) => {
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2200);
 const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
 
-scene.add(pointLight, ambientLight)
+scene.add(pointLight, ambientLight);
 
 
 // draw orbit outline for each planet
-const showGridContainer = document.getElementById('show-grid-container');
+const showGridContainer = document.getElementById('slide-show-btn');
 const showGridBtn = document.getElementById('show-grid-btn');
+const gridCloseBtn = document.getElementById('grid-close-btn');
+
+let outlineArray = [];
 
 showGridBtn.addEventListener('click', () => {
 
-    showGridContainer.style.visibility = 'hidden';
+    showGridBtn.style.display = 'none';
+    gridCloseBtn.style.display = 'flex';
 
     planetArray.map((planet) => {
 
@@ -173,27 +191,35 @@ showGridBtn.addEventListener('click', () => {
         const material = new THREE.LineBasicMaterial({ 
             color: 0xffffff,
             transparent: true,
-            opacity: 0.05
+            opacity: 0.1
         });
         const circleOutline = new THREE.LineLoop(geometry, material);
 
-        circleOutline.rotateX(-Math.PI/2)
+        circleOutline.rotateX(-Math.PI/2);
         scene.add(circleOutline);
 
+        outlineArray.push(circleOutline);
     });
 
 });
 
+gridCloseBtn.addEventListener('click', () => {
+    gridCloseBtn.style.display = 'none';
+    showGridBtn.style.display = 'flex';
+    outlineArray.forEach((outline) => {
+        scene.remove(outline);  
+    });
+});
 
 // render scene
 function animate() {
 
     // planets orbiting speed around the sun
-    sunObj.rotateX(0.0001);
+    // sun.rotateX(0.0001);
     mercuryObj.rotateY(0.0015);
     venusObj.rotateY(0.0012);
     earthObj.rotateY(0.001);
-        moonObj.rotateY(0.005)
+        moonObj.rotateY(0.005);
     marsObj.rotateY(0.0009);
     jupiterObj.rotateY(0.0007);
     saturnObj.rotateY(0.0005);
@@ -201,24 +227,20 @@ function animate() {
     neptuneObj.rotateY(0.0001);
 
     // planets rotation on their own axis
-    mercuryGeo.rotateY(.002)
-    venusGeo.rotateY(-.0025)
-    earthGeo.rotateY(.0035)
-    marsGeo.rotateY(.003)
-    jupiterGeo.rotateY(.0065)
-    saturnGeo.rotateY(.006)
-    uranusGeo.rotateX(.006)
-    neptuneGeo.rotateY(.009)
+    mercuryGeo.rotateY(.002);
+    venusGeo.rotateY(-.0025);
+    earthGeo.rotateY(.0035);
+    marsGeo.rotateY(.003);
+    jupiterGeo.rotateY(.0065);
+    saturnGeo.rotateY(.006);
+    uranusGeo.rotateX(.006);
+    neptuneGeo.rotateY(.009);
 
     control.update();
     cameraPivot.getWorldPosition(target);
-    camera.lookAt(target)
+    camera.lookAt(target);
 
 renderer.render(scene, camera);
 }
 
 renderer.setAnimationLoop(animate);
-
-
-
-
