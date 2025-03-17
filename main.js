@@ -93,6 +93,7 @@ const planetArray = [
 const slideShowContainer = document.getElementById('slide-show-container');
 const slideShowBtn = document.getElementById('slide-show-btn');
 const slideShowCloseBtn = document.getElementById('slide-show-close-btn');
+const slideShowModeContainer = document.getElementById('slide-show-mode-container');
 
 let slideShow;
 
@@ -102,6 +103,12 @@ slideShowBtn.addEventListener('click', () => {
 
     slideShowBtn.style.display = 'none';
     slideShowCloseBtn.style.display = 'flex';
+    slideShowModeContainer.style.display = 'inline'
+
+    setTimeout(()=> {
+        slideShowModeContainer.style.display = 'none'
+    }, 5000)
+
 
     var count = 0;
     planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet
@@ -134,6 +141,7 @@ slideShowCloseBtn.addEventListener('click', () => {
     slideShowBtn.style.display = 'flex';
     slideShowCloseBtn.style.display = 'none';
     clearInterval(slideShow);
+    slideShowModeContainer.style.display = 'none'
     camera.position.set(0, 1000, 2200);
     sun.add(cameraPivot);
 });
@@ -159,7 +167,7 @@ addToScene.map((planet) => {
 // add lights to scene
 // const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2200);
-const ambientLight = new THREE.AmbientLight(0x273746, 0.4)
+const ambientLight = new THREE.AmbientLight(0x273746, 0.4);
 
 scene.add(pointLight, ambientLight);
 

@@ -5,6 +5,11 @@ body {
     position: relative;
 }
 
+@font-face {
+    font-family: nasaFont;
+    src: url(./fonts/Nasalization\ Rg.otf);
+}
+
 #slide-show-container {
     position: absolute;
     display: flex;
@@ -33,15 +38,28 @@ body {
 }
 
 #slide-show-close-btn{
-    width: 45px;
-    opacity: 30%;
+    width: 60px;
+    opacity: 100%;
     display: none;
     cursor: pointer;
+}
 
-    &:hover {
-        width: 50px;
-        opacity: 70%;
-    }
+#slide-show-mode-container {
+    position: absolute;
+    width: 100vw;
+    /* background-color: cornflowerblue; */
+    text-align: center;
+    z-index: 200;
+    display: none;
+}
+
+#slide-show-heading {
+    margin: 35px 0;
+    color: #ffffff;
+    font-family: nasaFont, 'Courier New', Courier, monospace;
+    font-size: 20px;
+    opacity: 30%;
+    font-weight: 100;
 }
 
 #show-grid-container {
@@ -70,24 +88,13 @@ body {
     }
 }
 
-
-
 #grid-close-btn {
     width: 45px;
-    opacity: 30%;
+    opacity: 100%;
     display: none;
     cursor: pointer;
-
-    &:hover {
-        width: 50px;
-        opacity: 70%;
-    }
 }
 
 
-@keyframes gridButtonClick {
-    0% {width: 50px; opacity: 70%}
-    50% {width: 55px; opacity: 35%}
-    100% {width: 60px; opacity: 0%}
-};
-    
+/* #0b3d91 nasa blue color */
+/* #fc3d21 nasa red color*/
