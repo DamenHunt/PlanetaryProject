@@ -1,5 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { TextGeometry } from 'three/examples/jsm/Addons.js';
+import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TTFLoader } from 'three/examples/jsm/Addons.js';
+
+
 
 import sunMesh from './planets/sun.module.js';
 import mercuryMesh from './planets/mercury.module.js';
@@ -13,6 +18,7 @@ import saturnRingMesh from './planets/saturnRing.module.js';
 import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
 import uranusRingMesh from './planets/uranusRing.module.js';
+import { color } from 'three/tsl';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
@@ -89,6 +95,8 @@ const planetArray = [
     neptune
 ];
 
+
+
 // create slide show for viewing different planets
 const slideShowContainer = document.getElementById('slide-show-container');
 const slideShowBtn = document.getElementById('slide-show-btn');
@@ -107,7 +115,7 @@ slideShowBtn.addEventListener('click', () => {
 
     setTimeout(()=> {
         slideShowModeContainer.style.display = 'none'
-    }, 5000)
+    }, 7000)
 
 
     var count = 0;
@@ -218,6 +226,44 @@ gridCloseBtn.addEventListener('click', () => {
         scene.remove(outline);  
     });
 });
+
+
+// REVIEW HOW THIS FUNCTION WORKS!
+
+    /* 1. Why do you have to use a "FONT" instance instead of "FontLoader", 
+    and why is it parsing a json file? */
+    /* 2. Remember how to use 'Text Geometry" and how it is similar to the other geometries
+    that have been used. */
+    /* 3. Remember that adding Object3D can be used to reference the text's position around other objects,
+    similar to how the Moon is to the Earth, the rings are for Saturn and Uranus as well as 
+    camera pivoting. */
+    /* 4. Determine the best strategy for positioning the text centered over the sun and rest of the
+    planets. */
+
+const loader = new TTFLoader();
+loader.load('./fonts/space-age.ttf', (json) => {
+    const spaceAgeFont = new Font(json);
+    const textGeo = new TextGeometry('sun', {
+        height: 20,
+        size: 75,
+        font: spaceAgeFont,
+    });
+    const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const text = new THREE.Mesh(textGeo, textMaterial);
+    const textObj = new THREE.Object3D()
+    text.position.x = -146;
+    text.position.y = 350;
+    text.position.z = -25;
+    sun.add(textObj.add(text))
+});
+
+/* Tomorrow's Project:
+    - FIGURE OUT HOW TO ADD TEXT ABOVE EACH PLANET AND SET OF THEIR NAME AND COLOR TO THE TEXT
+        - maybe create an object for each planet file, storing their name, color value, descripiton, etc.
+        - then use that object data in an array with the text geometry to apply it to each planet accordingly.
+*/
+
+
 
 // render scene
 function animate() {
