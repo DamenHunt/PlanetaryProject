@@ -13,6 +13,8 @@ function saturnMesh() {
     saturnObj.add(saturn);
     saturn.position.set(1980, 0, 0);
 
+    saturn.name = 'Saturn';
+
     return { saturnGeo, saturnMaterial, saturn, saturnObj }
 
 }

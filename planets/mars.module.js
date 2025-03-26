@@ -13,6 +13,8 @@ function marsMesh() {
     marsObj.add(mars);
     mars.position.set(1220, 0, 0); 
 
+    mars.name = 'Mars';
+
     return { marsGeo, marsMaterial, mars, marsObj }
 
 }

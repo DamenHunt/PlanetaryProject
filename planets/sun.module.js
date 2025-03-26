@@ -9,6 +9,8 @@ function sunMesh() {
     sunObj.add(sun);
     sun.position.set(0, 0, 0);
 
+    sun.name = 'Sun';
+
     return { sunGeo, sunMaterial, sun, sunObj }
 
 }

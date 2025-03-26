@@ -13,6 +13,8 @@ function jupiterMesh() {
     jupiterObj.add(jupiter);
     jupiter.position.set(1750, 0, 0); 
 
+    jupiter.name = 'Jupiter';
+
     return { jupiterGeo, jupiterMaterial, jupiter, jupiterObj }
 
 }

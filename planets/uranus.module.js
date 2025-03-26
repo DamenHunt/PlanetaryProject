@@ -14,6 +14,8 @@ function uranusMesh() {
     uranus.position.set(2210, 0, 0);
     uranusGeo.rotateZ(Math.PI/2)
 
+    uranus.name = 'Uranus';
+
     return { uranusGeo, uranusMaterial, uranus, uranusObj }
 
 }

@@ -13,6 +13,8 @@ function venusMesh() {
     venusObj.add(venus);
     venus.position.set(760, 0, 0);
 
+    venus.name = 'Venus';
+
 return { venusGeo, venusMaterial, venus, venusObj }
 
 }

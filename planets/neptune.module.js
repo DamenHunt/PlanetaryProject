@@ -13,6 +13,8 @@ function neptuneMesh() {
     neptuneObj.add(neptune);
     neptune.position.set(2440, 0, 0); 
 
+    neptune.name = 'Neptune';
+
     return { neptuneGeo, neptuneMaterial, neptune, neptuneObj }
 
 }

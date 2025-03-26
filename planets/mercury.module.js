@@ -4,6 +4,8 @@ const mercuryTexture = new THREE.TextureLoader().load('textures/mercury-texture.
 
 function mercuryMesh() {
 
+    const planetName = 'Mercury';
+
     const mercuryGeo = new THREE.SphereGeometry(8, 100, 100);
     const mercuryMaterial = new THREE.MeshStandardMaterial({ 
         map: mercuryTexture,
@@ -13,7 +15,9 @@ function mercuryMesh() {
     mercuryObj.add(mercury);
     mercury.position.set(530, 0, 0);
 
-    return { mercuryGeo, mercuryMaterial, mercury, mercuryObj }
+    mercury.name = 'Mercury';
+
+    return { mercuryGeo, mercuryMaterial, mercury, mercuryObj, planetName }
 
 }
 

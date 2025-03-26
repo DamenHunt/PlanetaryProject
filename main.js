@@ -4,8 +4,6 @@ import { TextGeometry } from 'three/examples/jsm/Addons.js';
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TTFLoader } from 'three/examples/jsm/Addons.js';
 
-
-
 import sunMesh from './planets/sun.module.js';
 import mercuryMesh from './planets/mercury.module.js';
 import venusMesh from './planets/venus.module.js';
@@ -94,7 +92,6 @@ const planetArray = [
     uranus, 
     neptune
 ];
-
 
 
 // create slide show for viewing different planets
@@ -240,22 +237,35 @@ gridCloseBtn.addEventListener('click', () => {
     /* 4. Determine the best strategy for positioning the text centered over the sun and rest of the
     planets. */
 
-const loader = new TTFLoader();
-loader.load('./fonts/space-age.ttf', (json) => {
-    const spaceAgeFont = new Font(json);
-    const textGeo = new TextGeometry('sun', {
-        height: 20,
-        size: 75,
-        font: spaceAgeFont,
-    });
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const text = new THREE.Mesh(textGeo, textMaterial);
-    const textObj = new THREE.Object3D()
-    text.position.x = -146;
-    text.position.y = 350;
-    text.position.z = -25;
-    sun.add(textObj.add(text))
-});
+planetArray.forEach((planet) => {
+
+    if( planet !== sun ){
+
+        const loader = new TTFLoader();
+        loader.load('./fonts/space-age.ttf', (json) => {
+            const spaceAgeFont = new Font(json);
+            const textGeo = new TextGeometry(`${planet.name}`, {
+                height: 20,
+                depth: 3,
+                size: 7,
+                font: spaceAgeFont,
+            });
+            const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const text = new THREE.Mesh(textGeo, textMaterial);
+            const textObj = new THREE.Object3D()
+            text.position.x = 50;
+            // text.position.y = 0;
+            // text.position.z = 0;
+
+            // if( planet === jupiter && planet === saturn ) { 
+            //     text.position.x = 100;
+            // }
+        
+            planet.add(textObj.add(text))      
+        });
+    }
+
+})
 
 /* Tomorrow's Project:
     - FIGURE OUT HOW TO ADD TEXT ABOVE EACH PLANET AND SET OF THEIR NAME AND COLOR TO THE TEXT

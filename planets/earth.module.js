@@ -13,6 +13,9 @@ function earthMesh() {
     earthObj.add(earth);
     earth.position.set(990, 0, 0);
     // earthGeo.rotateZ(-0.41)
+
+    earth.name = 'Earth';
+    
     return { earthGeo, earthMaterial, earth, earthObj }
 
 }
