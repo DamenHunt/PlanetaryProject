@@ -98,3 +98,13 @@ body {
 
 /* #0b3d91 nasa blue color */
 /* #fc3d21 nasa red color*/
+
+#planet-buttons {
+    width: 100%;
+    /* border: white 1px solid; */
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 20px;
+}

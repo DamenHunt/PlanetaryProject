@@ -225,6 +225,21 @@ gridCloseBtn.addEventListener('click', () => {
 });
 
 
+
+// function PickAPlanet() {
+//     const planetButtons = document.querySelectorAll(".planet-btn");
+//     const arrayButtonsPlanets = Array.from(planetButtons);
+
+//     arrayButtonsPlanets.map(() => {
+
+//     })
+
+// }
+
+// PickAPlanet();
+
+
+
 // REVIEW HOW THIS FUNCTION WORKS!
 
     /* 1. Why do you have to use a "FONT" instance instead of "FontLoader", 
@@ -237,35 +252,35 @@ gridCloseBtn.addEventListener('click', () => {
     /* 4. Determine the best strategy for positioning the text centered over the sun and rest of the
     planets. */
 
-planetArray.forEach((planet) => {
+// planetArray.forEach((planet) => {
 
-    if( planet !== sun ){
+//     if( planet !== sun ){
 
-        const loader = new TTFLoader();
-        loader.load('./fonts/space-age.ttf', (json) => {
-            const spaceAgeFont = new Font(json);
-            const textGeo = new TextGeometry(`${planet.name}`, {
-                height: 20,
-                depth: 3,
-                size: 7,
-                font: spaceAgeFont,
-            });
-            const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            const text = new THREE.Mesh(textGeo, textMaterial);
-            const textObj = new THREE.Object3D()
-            text.position.x = 50;
-            // text.position.y = 0;
-            // text.position.z = 0;
+//         const loader = new TTFLoader();
+//         loader.load('./fonts/space-age.ttf', (json) => {
+//             const spaceAgeFont = new Font(json);
+//             const textGeo = new TextGeometry(`${planet.name}`, {
+//                 height: 20,
+//                 depth: 3,
+//                 size: 7,
+//                 font: spaceAgeFont,
+//             });
+//             const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+//             const text = new THREE.Mesh(textGeo, textMaterial);
+//             const textObj = new THREE.Object3D()
+//             text.position.x = 50;
+//             // text.position.y = 0;
+//             // text.position.z = 0;
 
-            // if( planet === jupiter && planet === saturn ) { 
-            //     text.position.x = 100;
-            // }
+//             // if( planet === jupiter && planet === saturn ) { 
+//             //     text.position.x = 100;
+//             // }
         
-            planet.add(textObj.add(text))      
-        });
-    }
+//             planet.add(textObj.add(text))      
+//         });
+//     }
 
-})
+// })
 
 /* Tomorrow's Project:
     - FIGURE OUT HOW TO ADD TEXT ABOVE EACH PLANET AND SET OF THEIR NAME AND COLOR TO THE TEXT
