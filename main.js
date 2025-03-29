@@ -109,10 +109,18 @@ slideShowBtn.addEventListener('click', () => {
 
     slideShowBtn.style.display = 'none';
     slideShowCloseBtn.style.display = 'flex';
-    slideShowModeContainer.style.display = 'inline'
+    slideShowModeContainer.style.display = 'inline';
+
+    showGridBtn.style.display = 'none';
+    gridCloseBtn.style.display = 'none';
+    outlineArray.forEach((outline) => {
+        scene.remove(outline);  
+    });
+
+    planetButtonList.style.display = 'none';
 
     infoContainer.style.display = 'none';
-    infoToggleContainerBtn.style.display = 'block';
+    infoToggleContainerBtn.style.display = 'none';
 
     setTimeout(()=> {
         slideShowModeContainer.style.display = 'none'
@@ -128,7 +136,7 @@ slideShowBtn.addEventListener('click', () => {
             count = 0;
         }
         if ( planetArray[count] === sun ) {
-            camera.position.set(0, 1000, 2200);
+            camera.position.set(0, 1000, 2400);
         } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
@@ -204,7 +212,7 @@ showGridBtn.addEventListener('click', () => {
         const material = new THREE.LineBasicMaterial({ 
             color: 0xffffff,
             transparent: true,
-            opacity: 0.1
+            opacity: 0.15
         });
         const circleOutline = new THREE.LineLoop(geometry, material);
 
@@ -234,7 +242,7 @@ let closedBtnWasPressed;
 
 infoCloseBtn.addEventListener('click', () => {
     infoContainer.style.display = 'none';
-    infoToggleContainerBtn.style.display = 'block';
+    infoToggleContainerBtn.style.display = 'flex';
     closedBtnWasPressed = true;
 })
 
@@ -243,7 +251,7 @@ infoToggleContainerBtn.addEventListener('click', () => {
     infoToggleContainerBtn.style.display = 'none';
 })
 
-
+const planetButtonList = document.getElementById('planet-button-list')
 const planetButtons = document.querySelectorAll(".planet-btn");
 const arrayButtonsPlanets = Array.from(planetButtons);
 
@@ -258,7 +266,7 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
         };
         planetArray[i].add(cameraPivot);
         if ( planetArray[i] === sun ) {
-            camera.position.set(0, 1000, 2200);
+            camera.position.set(0, 1000, 2400);
         } else if ( planetArray[i] === mercury || planetArray[i] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[i] === saturn || planetArray[i] === jupiter ) {
@@ -273,8 +281,13 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
 
 function StopSlideShow() {
     slideShowBtn.style.display = 'flex';
-    slideShowCloseBtn.style.display = 'none'
-    slideShowModeContainer.style.display = 'none'
+    slideShowCloseBtn.style.display = 'none';
+    slideShowModeContainer.style.display = 'none';
+    showGridBtn.style.display = 'flex';
+    planetButtonList.style.display = 'flex';
+    // if (!closedBtnWasPressed){
+    //     infoToggleContainerBtn.style.display = 'flex';
+    // };
     clearInterval(slideShow);
 }
 
@@ -283,10 +296,17 @@ function StopSlideShow() {
 
 
 /* TODO:
+
+    - !!! there is an issue with the Slide-Show, Grid & Info buttons, list of issues:
+        -- when StopSlideShow() is called it enables the infoToggleContainerBtn,
+        this is an issue because the infoContainer must be opened then closed to activate this button..
+        -- The show grid button duplicates when it is enabled and you select a planet from the planet list buttons
+
+
     - make a button for the moon to display information about it like the rest of the other planets
     - make a button for full screen mode that is compatable for all browsers (--webkits) 
-    - figure out why animations isnt working in CSS 
     - figure out how to remove scrollbar arrows also
+
 */
 
 
