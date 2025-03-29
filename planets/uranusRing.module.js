@@ -8,7 +8,7 @@ function uranusRingMesh() {
             color: 0xffffff,
             flatShading: true,
             transparent: true,
-            opacity: 0.4
+            opacity: 0.6
         });
         const uranusRing = new THREE.Mesh(uranusRingGeo, uranusRingMaterial);
         const uranusRingObj = new THREE.Object3D();

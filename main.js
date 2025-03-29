@@ -71,6 +71,7 @@ const control = new OrbitControls(camera, renderer.domElement);
     control.autoRotate= true;
     control.autoRotateSpeed = 1.2;
     control.enableDamping = true;
+    control.dampingFactor = 0.07;
 
 
 var target = new THREE.Vector3(); // to store the coordinates of an object to allow camera to track pivot around
@@ -114,7 +115,6 @@ slideShowBtn.addEventListener('click', () => {
         slideShowModeContainer.style.display = 'none'
     }, 7000)
 
-
     var count = 0;
     planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet
     function switchView() {
@@ -143,10 +143,7 @@ slideShowBtn.addEventListener('click', () => {
 });
 
 slideShowCloseBtn.addEventListener('click', () => {
-    slideShowBtn.style.display = 'flex';
-    slideShowCloseBtn.style.display = 'none';
-    clearInterval(slideShow);
-    slideShowModeContainer.style.display = 'none'
+    StopSlideShow();
     camera.position.set(0, 1000, 2200);
     sun.add(cameraPivot);
 });
@@ -172,7 +169,7 @@ addToScene.map((planet) => {
 // add lights to scene
 // const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
 const pointLight = new THREE.PointLight(0xFFD700, 1000000, 2200);
-const ambientLight = new THREE.AmbientLight(0x273746, 0.4);
+const ambientLight = new THREE.AmbientLight(0x273746, 0.5);
 
 scene.add(pointLight, ambientLight);
 
@@ -198,7 +195,7 @@ showGridBtn.addEventListener('click', () => {
         for (let i = 0; i <= segments; i++) {
             const theta = (i / segments) * Math.PI * 2;
             points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
-        }
+        };
 
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const material = new THREE.LineBasicMaterial({ 
@@ -225,18 +222,33 @@ gridCloseBtn.addEventListener('click', () => {
 });
 
 
+const planetButtons = document.querySelectorAll(".planet-btn");
+const arrayButtonsPlanets = Array.from(planetButtons);
 
-// function PickAPlanet() {
-//     const planetButtons = document.querySelectorAll(".planet-btn");
-//     const arrayButtonsPlanets = Array.from(planetButtons);
+for (let i = 0; i < arrayButtonsPlanets.length; i++) {
+    arrayButtonsPlanets[i].addEventListener('click', () => {
+        StopSlideShow();
+        planetArray[i].add(cameraPivot);
+        if ( planetArray[i] === sun ) {
+            camera.position.set(0, 1000, 2200);
+        } else if ( planetArray[i] === mercury || planetArray[i] === mars ) {
+            camera.position.set(0, 10, 35);
+        } else if ( planetArray[i] === saturn || planetArray[i] === jupiter ) {
+            camera.position.set(0, 50, 150);
+        } else if ( planetArray[i] === uranus || planetArray[i] === neptune ) {
+            camera.position.set(0, 10, 75);
+        } else if ( planetArray[i] === venus || planetArray[i] === earth ) {
+            camera.position.set(0, 40, 85);
+        };
+    });
+};
 
-//     arrayButtonsPlanets.map(() => {
-
-//     })
-
-// }
-
-// PickAPlanet();
+function StopSlideShow() {
+    slideShowBtn.style.display = 'flex';
+    slideShowCloseBtn.style.display = 'none'
+    slideShowModeContainer.style.display = 'none'
+    clearInterval(slideShow);
+}
 
 
 
@@ -289,6 +301,14 @@ gridCloseBtn.addEventListener('click', () => {
 */
 
 
+window.addEventListener('resize', () => {
+    // Update renderer size
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // Update camera aspect ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
 
 // render scene
 function animate() {

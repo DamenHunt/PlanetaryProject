@@ -5,11 +5,6 @@ body {
     position: relative;
 }
 
-@font-face {
-    font-family: nasaFont;
-    src: url(./fonts/Nasalization\ Rg.otf);
-}
-
 #slide-show-container {
     position: absolute;
     display: flex;
@@ -54,11 +49,11 @@ body {
 }
 
 #slide-show-heading {
-    margin: 25px 0;
+    margin: 50px 0;
     color: #ffffff;
-    font-family: nasaFont, 'Courier New', Courier, monospace;
-    font-size: 20px;
-    opacity: 30%;
+    font-size: 35px;
+    font-family: Geo;
+    opacity: 50%;
     font-weight: 100;
 }
 
@@ -99,12 +94,31 @@ body {
 /* #0b3d91 nasa blue color */
 /* #fc3d21 nasa red color*/
 
-#planet-buttons {
+#planet-button-list {
     width: 100%;
     /* border: white 1px solid; */
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 20px;
+    bottom: 35px;
+
+}
+
+.planet-btn {
+    margin: 0 5px;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: black;
+    color: grey;
+    border: solid 1px rgb(80, 80, 80);
+    cursor: pointer;
+    font-size: 20px;
+    font-family: Geo;
+
+    &:hover {
+        background-color: rgb(40, 40, 40);
+        color: black;
+        transition: 2ms;
+    }
 }
