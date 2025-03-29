@@ -14,6 +14,7 @@ function neptuneMesh() {
     neptune.position.set(2440, 0, 0); 
 
     neptune.name = 'Neptune';
+    neptune.color = '#2E5FA3';
 
     return { neptuneGeo, neptuneMaterial, neptune, neptuneObj }
 

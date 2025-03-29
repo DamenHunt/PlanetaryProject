@@ -14,6 +14,7 @@ function jupiterMesh() {
     jupiter.position.set(1750, 0, 0); 
 
     jupiter.name = 'Jupiter';
+    jupiter.color = '#DAA06D'
 
     return { jupiterGeo, jupiterMaterial, jupiter, jupiterObj }
 

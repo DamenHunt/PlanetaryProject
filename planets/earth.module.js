@@ -15,6 +15,7 @@ function earthMesh() {
     // earthGeo.rotateZ(-0.41)
 
     earth.name = 'Earth';
+    earth.color = '#5AA7E8';
     
     return { earthGeo, earthMaterial, earth, earthObj }
 

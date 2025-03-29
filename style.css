@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
 body {
     margin: 0;
     width: 100vw;
@@ -121,4 +127,82 @@ body {
         color: black;
         transition: 2ms;
     }
+}
+
+#info-container {
+    position: absolute;
+    width: 425px;
+    height: 525px;
+    background-color: rgba(0, 0, 0, 0.8);
+    right: 100px;
+    top: 100px;
+    border: 1px solid rgb(80, 80, 80);
+    border-radius: 7px;
+    backdrop-filter: blur(50px);
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+}
+
+#close-info-container-btn {
+    cursor: pointer;
+}
+
+#info-toggle-btn-container{
+    position: absolute;
+    cursor: pointer;
+    right: 50px;
+    top: 50px;
+    display: none;
+}
+
+#info-toggle-btn {
+    width: 24px;
+    /* animation-name: pulseInfo;
+    animation-duration: 4s;
+    animation-iteration-count: infinite; */
+}
+
+/* @keyframes pulseInfo {
+    from { width: 24; }
+    to { width: 28; }
+} */
+
+
+#info-header-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid #ffffff; */
+    border-radius: 7px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    flex-shrink: 1;
+}
+
+#info-header {
+    color: grey;
+    font-size: 30px;
+    font-family: Geo;
+    justify-self: center;
+    
+}
+
+#info-container-body {
+    color: grey;
+    font-size: 20px;
+    font-family: Geo;
+    /* border: 1px solid rgb(80, 80, 80); */
+    border-radius: 7px;
+    width: 100%;
+    padding: 20px;
+    flex-grow: 1;
+    overflow: auto;
+    scrollbar-color: grey rgba(0, 0, 0, 0);
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }

@@ -15,6 +15,7 @@ function uranusMesh() {
     uranusGeo.rotateZ(Math.PI/2)
 
     uranus.name = 'Uranus';
+    uranus.color = '#A1E0E5';
 
     return { uranusGeo, uranusMaterial, uranus, uranusObj }
 

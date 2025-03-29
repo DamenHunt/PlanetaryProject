@@ -14,6 +14,7 @@ function marsMesh() {
     mars.position.set(1220, 0, 0); 
 
     mars.name = 'Mars';
+    mars.color = '#C1440E'
 
     return { marsGeo, marsMaterial, mars, marsObj }
 

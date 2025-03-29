@@ -10,6 +10,7 @@ function sunMesh() {
     sun.position.set(0, 0, 0);
 
     sun.name = 'Sun';
+    sun.color = '#FFD700';
 
     return { sunGeo, sunMaterial, sun, sunObj }
 

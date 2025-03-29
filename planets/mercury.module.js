@@ -16,6 +16,7 @@ function mercuryMesh() {
     mercury.position.set(530, 0, 0);
 
     mercury.name = 'Mercury';
+    mercury.color = '#8B7355';
 
     return { mercuryGeo, mercuryMaterial, mercury, mercuryObj, planetName }
 

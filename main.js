@@ -111,6 +111,9 @@ slideShowBtn.addEventListener('click', () => {
     slideShowCloseBtn.style.display = 'flex';
     slideShowModeContainer.style.display = 'inline'
 
+    infoContainer.style.display = 'none';
+    infoToggleContainerBtn.style.display = 'block';
+
     setTimeout(()=> {
         slideShowModeContainer.style.display = 'none'
     }, 7000)
@@ -222,12 +225,37 @@ gridCloseBtn.addEventListener('click', () => {
 });
 
 
+const infoContainer = document.getElementById('info-container'); // change the CSS property to 'none' when finished editing
+const infoHeader = document.getElementById("info-header");
+const infoBody = document.getElementById("info-container-body");
+const infoCloseBtn = document.getElementById("close-info-container-btn");
+const infoToggleContainerBtn = document.getElementById("info-toggle-btn-container");
+let closedBtnWasPressed;
+
+infoCloseBtn.addEventListener('click', () => {
+    infoContainer.style.display = 'none';
+    infoToggleContainerBtn.style.display = 'block';
+    closedBtnWasPressed = true;
+})
+
+infoToggleContainerBtn.addEventListener('click', () => {
+    infoContainer.style.display = 'flex';
+    infoToggleContainerBtn.style.display = 'none';
+})
+
+
 const planetButtons = document.querySelectorAll(".planet-btn");
 const arrayButtonsPlanets = Array.from(planetButtons);
 
 for (let i = 0; i < arrayButtonsPlanets.length; i++) {
     arrayButtonsPlanets[i].addEventListener('click', () => {
-        StopSlideShow();
+        StopSlideShow(); // add a remove color to the function
+        infoHeader.innerText = planetArray[i].name
+        infoHeader.style.color = planetArray[i].color
+        infoBody.style.scrollbarColor = `${planetArray[i].color} rgba(0, 0, 0, 0)`;
+        if (!closedBtnWasPressed){
+            infoContainer.style.display = 'flex';
+        };
         planetArray[i].add(cameraPivot);
         if ( planetArray[i] === sun ) {
             camera.position.set(0, 1000, 2200);
@@ -252,17 +280,18 @@ function StopSlideShow() {
 
 
 
-// REVIEW HOW THIS FUNCTION WORKS!
 
-    /* 1. Why do you have to use a "FONT" instance instead of "FontLoader", 
-    and why is it parsing a json file? */
-    /* 2. Remember how to use 'Text Geometry" and how it is similar to the other geometries
-    that have been used. */
-    /* 3. Remember that adding Object3D can be used to reference the text's position around other objects,
-    similar to how the Moon is to the Earth, the rings are for Saturn and Uranus as well as 
-    camera pivoting. */
-    /* 4. Determine the best strategy for positioning the text centered over the sun and rest of the
-    planets. */
+
+/* TODO:
+    - make a button for the moon to display information about it like the rest of the other planets
+    - make a button for full screen mode that is compatable for all browsers (--webkits) 
+    - figure out why animations isnt working in CSS 
+    - figure out how to remove scrollbar arrows also
+*/
+
+
+
+
 
 // planetArray.forEach((planet) => {
 
@@ -294,11 +323,6 @@ function StopSlideShow() {
 
 // })
 
-/* Tomorrow's Project:
-    - FIGURE OUT HOW TO ADD TEXT ABOVE EACH PLANET AND SET OF THEIR NAME AND COLOR TO THE TEXT
-        - maybe create an object for each planet file, storing their name, color value, descripiton, etc.
-        - then use that object data in an array with the text geometry to apply it to each planet accordingly.
-*/
 
 
 window.addEventListener('resize', () => {

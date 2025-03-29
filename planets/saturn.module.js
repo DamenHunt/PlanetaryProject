@@ -14,6 +14,7 @@ function saturnMesh() {
     saturn.position.set(1980, 0, 0);
 
     saturn.name = 'Saturn';
+    saturn.color = '#E6C77F';
 
     return { saturnGeo, saturnMaterial, saturn, saturnObj }
 

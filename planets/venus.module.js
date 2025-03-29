@@ -14,6 +14,7 @@ function venusMesh() {
     venus.position.set(760, 0, 0);
 
     venus.name = 'Venus';
+    venus.color = '#D4A373';
 
 return { venusGeo, venusMaterial, venus, venusObj }
 
