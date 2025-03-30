@@ -43,7 +43,7 @@ body {
 
 #slide-show-close-btn{
     width: 55px;
-    opacity: 100%;
+    opacity: 50%;
     display: none;
     cursor: pointer;
 }
@@ -57,9 +57,9 @@ body {
 }
 
 #slide-show-heading {
-    margin: 50px 0;
+    margin: 100px 0;
     color: #ffffff;
-    font-size: 35px;
+    font-size: 30px;
     font-family: Geo;
     opacity: 50%;
     font-weight: 100;
@@ -84,7 +84,6 @@ body {
 #show-grid-btn {
     width: 35px;
     opacity: 30%;
-    display: flex;
     cursor: pointer;
 
     &:hover {
@@ -95,7 +94,7 @@ body {
 
 #grid-close-btn {
     width: 40px;
-    opacity: 100%;
+    opacity: 50%;
     display: none;
     cursor: pointer;
 }
@@ -136,7 +135,7 @@ body {
 #info-container {
     position: absolute;
     width: 425px;
-    height: 525px;
+    height: 550px;
     background-color: rgba(0, 0, 0, 0.8);
     right: 150px;
     /* top: 225px; */
@@ -144,7 +143,7 @@ body {
     border: 1px solid rgb(80, 80, 80);
     border-radius: 7px;
     backdrop-filter: blur(50px);
-    display: none;
+    display: none;                                   
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -157,10 +156,10 @@ body {
 
 #info-toggle-btn-container{
     position: absolute;
-    cursor: pointer;
+    
     right: 25px;
     bottom: 175px;
-    display: none; 
+    display: flex;                                                 /* FOR TESTING */
     justify-content: center;
     align-items: center;
     width: 70px;
@@ -171,11 +170,12 @@ body {
 #info-toggle-btn {
     width: 30px;
     animation: pulseInfo 1.2s 2 ease-in-out;
-    opacity: 70%;
+    opacity: 30%;
+    cursor: pointer;
 
     &:hover {
         width: 35px;
-        opacity: 100%;
+        opacity: 50%;
     }
 }
 
@@ -214,6 +214,32 @@ body {
     scrollbar-width: thin;
     scroll-behavior: smooth;
 }
+
+#full-screen-btn-container {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    display: flex;                                                 /* FOR TESTING */
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    /* border: 1px solid #ffffff; */
+    
+}
+
+#full-screen-btn {
+    cursor: pointer;
+    opacity: 30%;
+
+    &:hover {
+        width: 30px;
+        opacity: 50%;
+    }
+}
+
+
+
 
 
 /* KEYFRAMES */

@@ -102,6 +102,7 @@ const slideShowCloseBtn = document.getElementById('slide-show-close-btn');
 const slideShowModeContainer = document.getElementById('slide-show-mode-container');
 
 let slideShow;
+let slideShowMsg;
 
 slideShowBtn.addEventListener('click', () => {
 
@@ -120,11 +121,11 @@ slideShowBtn.addEventListener('click', () => {
     planetButtonList.style.display = 'none';
 
     infoContainer.style.display = 'none';
-    infoToggleContainerBtn.style.display = 'none';
+    infoToggleBtn.style.display = 'none';
 
-    setTimeout(()=> {
-        slideShowModeContainer.style.display = 'none'
-    }, 7000)
+    function ShowSlideShowMessage() {
+        slideShowModeContainer.style.display = 'none';
+    }
 
     var count = 0;
     planetArray[count].add(cameraPivot); // initially attach cameraPivot to the first planet
@@ -150,11 +151,15 @@ slideShowBtn.addEventListener('click', () => {
         planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
     }
     slideShow = setInterval(switchView, 10000);
+    slideShowMsg = setTimeout(ShowSlideShowMessage, 5000);
 
 });
 
 slideShowCloseBtn.addEventListener('click', () => {
     StopSlideShow();
+    // if (closedBtnWasPressed){                                                    /* FOR TESTING */
+        infoToggleBtn.style.display = 'flex';
+    // };
     camera.position.set(0, 1000, 2200);
     sun.add(cameraPivot);
 });
@@ -237,18 +242,21 @@ const infoContainer = document.getElementById('info-container'); // change the C
 const infoHeader = document.getElementById("info-header");
 const infoBody = document.getElementById("info-container-body");
 const infoCloseBtn = document.getElementById("close-info-container-btn");
-const infoToggleContainerBtn = document.getElementById("info-toggle-btn-container");
+const infoToggleBtn = document.getElementById("info-toggle-btn");
 let closedBtnWasPressed;
 
 infoCloseBtn.addEventListener('click', () => {
     infoContainer.style.display = 'none';
-    infoToggleContainerBtn.style.display = 'flex';
+    infoToggleBtn.style.display = 'flex';
     closedBtnWasPressed = true;
 })
 
-infoToggleContainerBtn.addEventListener('click', () => {
-    infoContainer.style.display = 'flex';
-    infoToggleContainerBtn.style.display = 'none';
+infoToggleBtn.addEventListener('click', () => {
+    if(infoContainer.style.display === 'flex') {
+        infoContainer.style.display = 'none';
+    } else {
+        infoContainer.style.display = 'flex';
+    }
 })
 
 const planetButtonList = document.getElementById('planet-button-list')
@@ -257,7 +265,6 @@ const arrayButtonsPlanets = Array.from(planetButtons);
 
 for (let i = 0; i < arrayButtonsPlanets.length; i++) {
     arrayButtonsPlanets[i].addEventListener('click', () => {
-        StopSlideShow(); // add a remove color to the function
         infoHeader.innerText = planetArray[i].name
         infoHeader.style.color = planetArray[i].color
         infoBody.style.scrollbarColor = `${planetArray[i].color} rgba(0, 0, 0, 0)`;
@@ -285,20 +292,28 @@ function StopSlideShow() {
     slideShowModeContainer.style.display = 'none';
     showGridBtn.style.display = 'flex';
     planetButtonList.style.display = 'flex';
-    // if (!closedBtnWasPressed){
-    //     infoToggleContainerBtn.style.display = 'flex';
-    // };
+    infoHeader.innerText = sun.name
+    infoHeader.style.color = sun.color
+    infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
+    closedBtnWasPressed = false;
     clearInterval(slideShow);
+    clearTimeout(slideShowMsg);
 }
 
-
-
+// Fullscreen Mode
+const fullscreenBtn = document.getElementById('full-screen-btn');
+fullscreenBtn.addEventListener('click', ()=> {
+    if(document.documentElement.requestFullscreen()) {
+        document.exitFullscreen();
+    };
+    document.documentElement.requestFullscreen();
+})
 
 
 /* TODO:
 
     - !!! there is an issue with the Slide-Show, Grid & Info buttons, list of issues:
-        -- when StopSlideShow() is called it enables the infoToggleContainerBtn,
+        -- when StopSlideShow() is called it enables the infoToggleBtn,
         this is an issue because the infoContainer must be opened then closed to activate this button..
         -- The show grid button duplicates when it is enabled and you select a planet from the planet list buttons
 
@@ -308,41 +323,6 @@ function StopSlideShow() {
     - figure out how to remove scrollbar arrows also
 
 */
-
-
-
-
-
-// planetArray.forEach((planet) => {
-
-//     if( planet !== sun ){
-
-//         const loader = new TTFLoader();
-//         loader.load('./fonts/space-age.ttf', (json) => {
-//             const spaceAgeFont = new Font(json);
-//             const textGeo = new TextGeometry(`${planet.name}`, {
-//                 height: 20,
-//                 depth: 3,
-//                 size: 7,
-//                 font: spaceAgeFont,
-//             });
-//             const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-//             const text = new THREE.Mesh(textGeo, textMaterial);
-//             const textObj = new THREE.Object3D()
-//             text.position.x = 50;
-//             // text.position.y = 0;
-//             // text.position.z = 0;
-
-//             // if( planet === jupiter && planet === saturn ) { 
-//             //     text.position.x = 100;
-//             // }
-        
-//             planet.add(textObj.add(text))      
-//         });
-//     }
-
-// })
-
 
 
 window.addEventListener('resize', () => {

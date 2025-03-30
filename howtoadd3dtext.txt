@@ -1,0 +1,29 @@
+The code below demonstrates how to add 3D text to objects in ThreeJS
+
+// planetArray.forEach((planet) => {
+//     if( planet !== sun ){
+
+//         const loader = new TTFLoader();
+//         loader.load('./fonts/space-age.ttf', (json) => {
+//             const spaceAgeFont = new Font(json);
+//             const textGeo = new TextGeometry(`${planet.name}`, {
+//                 height: 20,
+//                 depth: 3,
+//                 size: 7,
+//                 font: spaceAgeFont,
+//             });
+//             const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+//             const text = new THREE.Mesh(textGeo, textMaterial);
+//             const textObj = new THREE.Object3D()
+//             text.position.x = 50;
+//             // text.position.y = 0;
+//             // text.position.z = 0;
+
+//             // if( planet === jupiter && planet === saturn ) { 
+//             //     text.position.x = 100;
+//             // }
+        
+//             planet.add(textObj.add(text))      
+//         });
+//     }
+// })
