@@ -160,7 +160,7 @@ slideShowCloseBtn.addEventListener('click', () => {
     // if (closedBtnWasPressed){                                                    /* FOR TESTING */
         infoToggleBtn.style.display = 'flex';
     // };
-    camera.position.set(0, 1000, 2200);
+    camera.position.set(0, 1000, 2400);
     sun.add(cameraPivot);
 });
 
@@ -267,6 +267,7 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
     arrayButtonsPlanets[i].addEventListener('click', () => {
         infoHeader.innerText = planetArray[i].name
         infoHeader.style.color = planetArray[i].color
+        infoBody.innerText = planetArray[i].body
         infoBody.style.scrollbarColor = `${planetArray[i].color} rgba(0, 0, 0, 0)`;
         if (!closedBtnWasPressed){
             infoContainer.style.display = 'flex';
@@ -294,11 +295,20 @@ function StopSlideShow() {
     planetButtonList.style.display = 'flex';
     infoHeader.innerText = sun.name
     infoHeader.style.color = sun.color
+    infoBody.innerText = sun.body
     infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
     closedBtnWasPressed = false;
     clearInterval(slideShow);
     clearTimeout(slideShowMsg);
 }
+
+//Default Info Container Information
+infoHeader.innerText = sun.name
+infoHeader.style.color = sun.color
+infoBody.innerText = sun.body
+infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
+
+
 
 // Fullscreen Mode
 const fullscreenBtn = document.getElementById('full-screen-btn');
@@ -328,7 +338,7 @@ fullscreenBtn.addEventListener('click', ()=> {
 window.addEventListener('resize', () => {
     // Update renderer size
     renderer.setSize(window.innerWidth, window.innerHeight);
-    
+
     // Update camera aspect ratio
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
