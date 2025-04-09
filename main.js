@@ -327,7 +327,6 @@ fullscreenBtn.addEventListener('click', ()=> {
         this is an issue because the infoContainer must be opened then closed to activate this button..
         -- The show grid button duplicates when it is enabled and you select a planet from the planet list buttons
 
-
     - make a button for the moon to display information about it like the rest of the other planets
     - make a button for full screen mode that is compatable for all browsers (--webkits) 
     - figure out how to remove scrollbar arrows also
