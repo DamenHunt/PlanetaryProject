@@ -54,7 +54,6 @@ const { uranusRingGeo, uranusRing, uranusRingObj } = uranusRingMesh();
     uranus.add(uranusRingObj.add(uranusRing));
 const { neptuneGeo, neptune, neptuneObj } = neptuneMesh();
 
-
 function addStar() {
     const starGeo = new THREE.SphereGeometry(3, 2, 2);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xfdfefe });
@@ -93,7 +92,6 @@ const planetArray = [
     uranus, 
     neptune
 ];
-
 
 // create slide show for viewing different planets
 const slideShowContainer = document.getElementById('slide-show-container');
@@ -189,7 +187,6 @@ const ambientLight = new THREE.AmbientLight(0x273746, 0.5);
 
 scene.add(pointLight, ambientLight);
 
-
 // draw orbit outline for each planet
 const showGridContainer = document.getElementById('slide-show-btn');
 const showGridBtn = document.getElementById('show-grid-btn');
@@ -236,7 +233,6 @@ gridCloseBtn.addEventListener('click', () => {
         scene.remove(outline);  
     });
 });
-
 
 const infoContainer = document.getElementById('info-container'); // change the CSS property to 'none' when finished editing
 const infoHeader = document.getElementById("info-header");
@@ -319,7 +315,6 @@ fullscreenBtn.addEventListener('click', ()=> {
     document.documentElement.requestFullscreen();
 })
 
-
 /* TODO:
 
     - !!! there is an issue with the Slide-Show, Grid & Info buttons, list of issues:
@@ -332,7 +327,6 @@ fullscreenBtn.addEventListener('click', ()=> {
     - figure out how to remove scrollbar arrows also
 
 */
-
 
 window.addEventListener('resize', () => {
     // Update renderer size
