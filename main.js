@@ -72,6 +72,14 @@ const control = new OrbitControls(camera, renderer.domElement);
     control.enableDamping = true;
     control.dampingFactor = 0.07;
 
+const autoRotateBtn = document.getElementById('auto-rotate-btn');
+autoRotateBtn.addEventListener('click', () => {
+    if(control.autoRotate === true) {
+        control.autoRotate = false;
+    } else if(control.autoRotate === false) {
+        control.autoRotate = true;
+    }
+});
 
 var target = new THREE.Vector3(); // to store the coordinates of an object to allow camera to track pivot around
 
@@ -304,8 +312,6 @@ infoHeader.style.color = sun.color
 infoBody.innerText = sun.body
 infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
 
-
-
 // Fullscreen Mode
 const fullscreenBtn = document.getElementById('full-screen-btn');
 fullscreenBtn.addEventListener('click', ()=> {
@@ -314,19 +320,6 @@ fullscreenBtn.addEventListener('click', ()=> {
     };
     document.documentElement.requestFullscreen();
 })
-
-/* TODO:
-
-    - !!! there is an issue with the Slide-Show, Grid & Info buttons, list of issues:
-        -- when StopSlideShow() is called it enables the infoToggleBtn,
-        this is an issue because the infoContainer must be opened then closed to activate this button..
-        -- The show grid button duplicates when it is enabled and you select a planet from the planet list buttons
-
-    - make a button for the moon to display information about it like the rest of the other planets
-    - make a button for full screen mode that is compatable for all browsers (--webkits) 
-    - figure out how to remove scrollbar arrows also
-
-*/
 
 window.addEventListener('resize', () => {
     // Update renderer size

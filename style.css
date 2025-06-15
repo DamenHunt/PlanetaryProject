@@ -158,7 +158,7 @@ body {
     position: absolute;
     
     right: 25px;
-    bottom: 175px;
+    bottom: 225px;
     display: flex;                                                 /* FOR TESTING */
     justify-content: center;
     align-items: center;
@@ -175,6 +175,31 @@ body {
 
     &:hover {
         width: 35px;
+        opacity: 50%;
+    }
+}
+
+#auto-rotate-btn-container{
+    position: absolute;
+    
+    right: 25px;
+    bottom: 165px;
+    display: flex;                                                 /* FOR TESTING */
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    /* border: 1px solid #ffffff; */
+}
+
+#auto-rotate-btn {
+    width: 40px;
+    /* animation: pulseInfo 1.2s 2 ease-in-out; */
+    opacity: 30%;
+    cursor: pointer;
+
+    &:hover {
+        width: 45px;
         opacity: 50%;
     }
 }
