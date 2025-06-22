@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { TextGeometry } from 'three/examples/jsm/Addons.js';
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TTFLoader } from 'three/examples/jsm/Addons.js';
+import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 
 import sunMesh from './planets/sun.module.js';
 import mercuryMesh from './planets/mercury.module.js';
@@ -72,13 +73,18 @@ const control = new OrbitControls(camera, renderer.domElement);
     control.enableDamping = true;
     control.dampingFactor = 0.07;
 
-const autoRotateBtn = document.getElementById('auto-rotate-btn');
-autoRotateBtn.addEventListener('click', () => {
-    if(control.autoRotate === true) {
-        control.autoRotate = false;
-    } else if(control.autoRotate === false) {
+const startAutoRotateBtn = document.getElementById('start-auto-rotate-btn');
+const stopAutoRotateBtn = document.getElementById('stop-auto-rotate-btn');
+startAutoRotateBtn.addEventListener('click', () => {
         control.autoRotate = true;
-    }
+        startAutoRotateBtn.style.display = 'none'
+        stopAutoRotateBtn.style.display = 'flex'
+});
+
+stopAutoRotateBtn.addEventListener('click', () => {
+        control.autoRotate = false;
+        stopAutoRotateBtn.style.display = 'none'
+        startAutoRotateBtn.style.display = 'flex'
 });
 
 var target = new THREE.Vector3(); // to store the coordinates of an object to allow camera to track pivot around
@@ -87,7 +93,7 @@ const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
 cameraPivot.position.set(0, 0, 0);
 
-camera.position.set(0, 1000, 2400);
+camera.position.set(0, 1200, 3500);
 
 const planetArray = [
     sun, 
@@ -112,6 +118,7 @@ let slideShowMsg;
 
 slideShowBtn.addEventListener('click', () => {
 
+    control.autoRotate = true;
     camera.position.set(0, -600, 800);
 
     slideShowBtn.style.display = 'none';
@@ -128,6 +135,9 @@ slideShowBtn.addEventListener('click', () => {
 
     infoContainer.style.display = 'none';
     infoToggleBtn.style.display = 'none';
+
+    startAutoRotateBtn.style.display = 'none'
+    stopAutoRotateBtn.style.display = 'none'
 
     function ShowSlideShowMessage() {
         slideShowModeContainer.style.display = 'none';
@@ -166,14 +176,14 @@ slideShowCloseBtn.addEventListener('click', () => {
     // if (closedBtnWasPressed){                                                    /* FOR TESTING */
         infoToggleBtn.style.display = 'flex';
     // };
-    camera.position.set(0, 1000, 2400);
+    camera.position.set(0, 1200, 3500);
     sun.add(cameraPivot);
 });
 
 // saturn.add(cameraPivot);
 
 const addToScene = [
-    sunObj, 
+    // sunObj, 
     mercuryObj, 
     venusObj, 
     earthObj, 
@@ -202,36 +212,37 @@ const gridCloseBtn = document.getElementById('grid-close-btn');
 
 let outlineArray = [];
 
-showGridBtn.addEventListener('click', () => {
+planetArray.map((planet) => {
 
-    showGridBtn.style.display = 'none';
-    gridCloseBtn.style.display = 'flex';
+    let radius = planet.position.x
+    const segments = 1000;
+    const points = [];
 
-    planetArray.map((planet) => {
+    for (let i = 0; i <= segments; i++) {
+        const theta = (i / segments) * Math.PI * 2;
+        points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
+    };
 
-        let radius = planet.position.x
-        const segments = 1000;
-        const points = [];
-
-        for (let i = 0; i <= segments; i++) {
-            const theta = (i / segments) * Math.PI * 2;
-            points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
-        };
-
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ 
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.15
-        });
-        const circleOutline = new THREE.LineLoop(geometry, material);
-
-        circleOutline.rotateX(-Math.PI/2);
-        scene.add(circleOutline);
-
-        outlineArray.push(circleOutline);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.15
     });
+    const circleOutline = new THREE.LineLoop(geometry, material);
 
+    circleOutline.rotateX(-Math.PI/2);
+    scene.add(circleOutline);
+
+    outlineArray.push(circleOutline);
+});
+
+showGridBtn.addEventListener('click', () => {
+    gridCloseBtn.style.display = 'flex';
+    showGridBtn.style.display = 'none';
+    outlineArray.forEach((outline) => {
+        scene.add(outline);  
+    });
 });
 
 gridCloseBtn.addEventListener('click', () => {
@@ -295,6 +306,7 @@ function StopSlideShow() {
     slideShowBtn.style.display = 'flex';
     slideShowCloseBtn.style.display = 'none';
     slideShowModeContainer.style.display = 'none';
+    stopAutoRotateBtn.style.display = 'flex'
     showGridBtn.style.display = 'flex';
     planetButtonList.style.display = 'flex';
     infoHeader.innerText = sun.name
@@ -329,6 +341,14 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 });
+
+const gltfLoader = new GLTFLoader();
+gltfLoader.load('./assets/sun_and_solar_flares_gltf/scene.gltf', (gltfScene) => {
+    gltfScene.scene.scale.set(310, 310, 310)
+    // gltfScene.scene.rotateX(100)
+    scene.add(gltfScene.scene)
+})
+
 
 // render scene
 function animate() {
