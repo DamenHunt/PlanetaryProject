@@ -18,6 +18,7 @@ import uranusMesh from './planets/uranus.module.js';
 import neptuneMesh from './planets/neptune.module.js';
 import uranusRingMesh from './planets/uranusRing.module.js';
 import { color } from 'three/tsl';
+import { outline } from 'three/examples/jsm/tsl/display/OutlineNode.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
@@ -153,7 +154,7 @@ slideShowBtn.addEventListener('click', () => {
             count = 0;
         }
         if ( planetArray[count] === sun ) {
-            camera.position.set(0, 1000, 2400);
+            camera.position.set(0, 1000, 1500);
         } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
@@ -173,12 +174,27 @@ slideShowBtn.addEventListener('click', () => {
 
 slideShowCloseBtn.addEventListener('click', () => {
     StopSlideShow();
-    // if (closedBtnWasPressed){                                                    /* FOR TESTING */
-        infoToggleBtn.style.display = 'flex';
-    // };
+    MakeGrid();
+    infoToggleBtn.style.display = 'flex';
     camera.position.set(0, 1200, 3500);
     sun.add(cameraPivot);
 });
+
+function StopSlideShow() {
+    slideShowBtn.style.display = 'flex';
+    slideShowCloseBtn.style.display = 'none';
+    slideShowModeContainer.style.display = 'none';
+    stopAutoRotateBtn.style.display = 'flex'
+    gridCloseBtn.style.display = 'flex';
+    planetButtonList.style.display = 'flex';
+    infoHeader.innerText = sun.name
+    infoHeader.style.color = sun.color
+    infoBody.innerText = sun.body
+    infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
+    closedBtnWasPressed = false;
+    clearInterval(slideShow);
+    clearTimeout(slideShowMsg);
+}
 
 // saturn.add(cameraPivot);
 
@@ -212,37 +228,40 @@ const gridCloseBtn = document.getElementById('grid-close-btn');
 
 let outlineArray = [];
 
-planetArray.map((planet) => {
 
-    let radius = planet.position.x
-    const segments = 1000;
-    const points = [];
+function MakeGrid() {
+    planetArray.map((planet) => {
 
-    for (let i = 0; i <= segments; i++) {
-        const theta = (i / segments) * Math.PI * 2;
-        points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
-    };
+        let radius = planet.position.x
+        const segments = 1000;
+        const points = [];
 
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({ 
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.15
+        for (let i = 0; i <= segments; i++) {
+            const theta = (i / segments) * Math.PI * 2;
+            points.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
+        };
+
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ 
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.15
+        });
+        const circleOutline = new THREE.LineLoop(geometry, material);
+
+        circleOutline.rotateX(-Math.PI/2);
+        scene.add(circleOutline);
+
+        outlineArray.push(circleOutline);
     });
-    const circleOutline = new THREE.LineLoop(geometry, material);
+};
 
-    circleOutline.rotateX(-Math.PI/2);
-    scene.add(circleOutline);
-
-    outlineArray.push(circleOutline);
-});
+MakeGrid();
 
 showGridBtn.addEventListener('click', () => {
     gridCloseBtn.style.display = 'flex';
     showGridBtn.style.display = 'none';
-    outlineArray.forEach((outline) => {
-        scene.add(outline);  
-    });
+    MakeGrid();
 });
 
 gridCloseBtn.addEventListener('click', () => {
@@ -289,7 +308,7 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
         };
         planetArray[i].add(cameraPivot);
         if ( planetArray[i] === sun ) {
-            camera.position.set(0, 1000, 2400);
+            camera.position.set(0, 250, 850);
         } else if ( planetArray[i] === mercury || planetArray[i] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[i] === saturn || planetArray[i] === jupiter ) {
@@ -301,22 +320,6 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
         };
     });
 };
-
-function StopSlideShow() {
-    slideShowBtn.style.display = 'flex';
-    slideShowCloseBtn.style.display = 'none';
-    slideShowModeContainer.style.display = 'none';
-    stopAutoRotateBtn.style.display = 'flex'
-    showGridBtn.style.display = 'flex';
-    planetButtonList.style.display = 'flex';
-    infoHeader.innerText = sun.name
-    infoHeader.style.color = sun.color
-    infoBody.innerText = sun.body
-    infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
-    closedBtnWasPressed = false;
-    clearInterval(slideShow);
-    clearTimeout(slideShowMsg);
-}
 
 //Default Info Container Information
 infoHeader.innerText = sun.name
