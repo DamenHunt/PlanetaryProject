@@ -179,7 +179,6 @@ body {
     height: 550px;
     background-color: rgba(0, 0, 0, 0.8);
     right: 143px;
-    /* top: 225px; */
     bottom: 19%;
     border: 1px solid rgb(80, 80, 80);
     border-radius: 7px;
@@ -327,4 +326,17 @@ body {
 }
 @keyframes l11 {
    100% {transform:rotate(calc(var(--s,1)*1turn))}
+}
+
+
+@media screen and (max-width: 800px) {
+    #planet-button-list, 
+    #info-container, 
+    #info-toggle-btn, 
+    #show-grid-container,
+    #auto-rotate-btn-container,
+    #slide-show-container,
+    #full-screen-btn-container {
+        visibility: hidden;
+    }
 }
