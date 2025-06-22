@@ -352,6 +352,11 @@ gltfLoader.load('./assets/sun_and_solar_flares_gltf/scene.gltf', (gltfScene) => 
     scene.add(gltfScene.scene)
 })
 
+window.onload = function() {
+  var loader = document.getElementById('loader-container');
+  loader.remove(); // Or loader.style.display = 'none';
+};
+
 
 // render scene
 function animate() {
