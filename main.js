@@ -5,6 +5,8 @@ import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TTFLoader } from 'three/examples/jsm/Addons.js';
 import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 
+import solarSystemMesh from './planets/solarSystem.js';
+
 import sunMesh from './planets/sun.module.js';
 import mercuryMesh from './planets/mercury.module.js';
 import venusMesh from './planets/venus.module.js';
@@ -26,6 +28,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+const { solarSystemGeo, solarSystem, solarSystemObj }  = solarSystemMesh();
 const { sunGeo, sun, sunObj }  = sunMesh();
 const { mercuryGeo, mercury, mercuryObj } = mercuryMesh();
 const { venusGeo, venus, venusObj } = venusMesh();
@@ -94,9 +97,10 @@ const cameraPivot = new THREE.Object3D();
 cameraPivot.add(camera);
 cameraPivot.position.set(0, 0, 0);
 
-camera.position.set(0, 1200, 3500);
+camera.position.set(0, 700, 2400);
 
 const planetArray = [
+    solarSystem,
     sun, 
     mercury, 
     venus, 
@@ -120,7 +124,7 @@ let slideShowMsg;
 slideShowBtn.addEventListener('click', () => {
 
     control.autoRotate = true;
-    camera.position.set(0, -600, 800);
+    camera.position.set(0, 3500, 0);
 
     slideShowBtn.style.display = 'none';
     slideShowCloseBtn.style.display = 'flex';
@@ -137,8 +141,10 @@ slideShowBtn.addEventListener('click', () => {
     infoContainer.style.display = 'none';
     infoToggleBtn.style.display = 'none';
 
-    startAutoRotateBtn.style.display = 'none'
-    stopAutoRotateBtn.style.display = 'none'
+    startAutoRotateBtn.style.display = 'none';
+    stopAutoRotateBtn.style.display = 'none';
+
+    fullscreenBtn.style.display ='none';
 
     function ShowSlideShowMessage() {
         slideShowModeContainer.style.display = 'none';
@@ -153,8 +159,10 @@ slideShowBtn.addEventListener('click', () => {
         if ( count === planetArray.length ) {
             count = 0;
         }
-        if ( planetArray[count] === sun ) {
-            camera.position.set(0, 1000, 1500);
+        if ( planetArray[count] === solarSystem ) {
+            camera.position.set(0, 3500, 0);
+        } else if ( planetArray[count] === sun ) {
+            camera.position.set(0, 250, 850);
         } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
@@ -167,7 +175,7 @@ slideShowBtn.addEventListener('click', () => {
 
         planetArray[count].add(cameraPivot); // attach cameraPivot to the new planet
     }
-    slideShow = setInterval(switchView, 10000);
+    slideShow = setInterval(switchView, 7000);
     slideShowMsg = setTimeout(ShowSlideShowMessage, 5000);
 
 });
@@ -176,7 +184,7 @@ slideShowCloseBtn.addEventListener('click', () => {
     StopSlideShow();
     MakeGrid();
     infoToggleBtn.style.display = 'flex';
-    camera.position.set(0, 1200, 3500);
+    camera.position.set(0, 700, 2400);
     sun.add(cameraPivot);
 });
 
@@ -187,10 +195,11 @@ function StopSlideShow() {
     stopAutoRotateBtn.style.display = 'flex'
     gridCloseBtn.style.display = 'flex';
     planetButtonList.style.display = 'flex';
-    infoHeader.innerText = sun.name
-    infoHeader.style.color = sun.color
-    infoBody.innerText = sun.body
-    infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
+    fullscreenBtn.style.display ='flex';
+    infoHeader.innerText = planetArray[0].name
+    infoHeader.style.color = planetArray[0].color
+    infoBody.innerText = planetArray[0].body
+    infoBody.style.scrollbarColor = `${planetArray[0].color} rgba(0, 0, 0, 0)`;
     closedBtnWasPressed = false;
     clearInterval(slideShow);
     clearTimeout(slideShowMsg);
@@ -307,7 +316,9 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
             infoContainer.style.display = 'flex';
         };
         planetArray[i].add(cameraPivot);
-        if ( planetArray[i] === sun ) {
+        if ( planetArray[i] === solarSystem ) {
+            camera.position.set(0, 700, 2400);
+        }else if ( planetArray[i] === sun ) {
             camera.position.set(0, 250, 850);
         } else if ( planetArray[i] === mercury || planetArray[i] === mars ) {
             camera.position.set(0, 10, 35);
@@ -322,10 +333,10 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
 };
 
 //Default Info Container Information
-infoHeader.innerText = sun.name
-infoHeader.style.color = sun.color
-infoBody.innerText = sun.body
-infoBody.style.scrollbarColor = `${sun.color} rgba(0, 0, 0, 0)`;
+infoHeader.innerText = planetArray[0].name
+infoHeader.style.color = planetArray[0].color
+infoBody.innerText = planetArray[0].body
+infoBody.style.scrollbarColor = `${planetArray[0].color} rgba(0, 0, 0, 0)`;
 
 // Fullscreen Mode
 const fullscreenBtn = document.getElementById('full-screen-btn');
@@ -356,6 +367,43 @@ window.onload = function() {
   var loader = document.getElementById('loader-container');
   loader.remove(); // Or loader.style.display = 'none';
 };
+
+
+const dragElement = document.getElementById("info-container");
+
+  let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
+
+  dragElement.addEventListener("mousedown", dragStart);
+
+  function dragStart(e) {
+    e.preventDefault();
+
+    // Get the initial mouse and div positions
+    initialX = e.clientX;
+    initialY = e.clientY;
+
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", dragEnd);
+  }
+
+  function drag(e) {
+    // Calculate the new cursor position
+    offsetX = e.clientX - initialX;
+    offsetY = e.clientY - initialY;
+
+    // Set the element's new position
+    dragElement.style.left = dragElement.offsetLeft + offsetX + "px";
+    dragElement.style.top = dragElement.offsetTop + offsetY + "px";
+
+    // Update the initial positions
+    initialX = e.clientX;
+    initialY = e.clientY;
+  }
+
+  function dragEnd() {
+    document.removeEventListener("mousemove", drag);
+    document.removeEventListener("mouseup", dragEnd);
+  }
 
 
 // render scene
