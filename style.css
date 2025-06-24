@@ -1,14 +1,7 @@
-/* html {
-    min-width: 100vw;
-    min-height: 100vh;
-    overflow: hidden;
-} */
-
 *{
     margin: 0;
     box-sizing: border-box;
 }
-
 
 body {
     overflow: hidden;
@@ -20,7 +13,7 @@ body {
 
 #button-box {
     background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px);
     position: absolute;
     height: 100%;
     width: 100px;
@@ -29,13 +22,10 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    /* border: 1px red solid; */
 }
 
-/* SLIDE-SHOW BUTTON RULES */
-
+/* SLIDE-SHOW BUTTON CONTAINER */
 #slide-show-container {
-    /* position: absolute; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,9 +33,6 @@ body {
     width: 70px;
     height: 70px;
     opacity: 100%;
-    /* bottom: 25px;
-    right: 25px; */
-    /* border: 1px solid white; */
 }
 
 #slide-show-btn {
@@ -89,19 +76,14 @@ body {
     font-weight: 100;
 }
 
-/* GRID BUTTON RULES*/
-
+/* GRID BUTTON CONTAINER*/
 #show-grid-container {
-    /* position: absolute; */
     display: flex;
     justify-content: center;
     align-items: center;
     width: 70px;
     height: 70px;
     opacity: 100%;
-    /* bottom: 155px;
-    right: 25px; */
-    /* border: 1px solid white; */
 }
 
 #show-grid-btn {
@@ -122,24 +104,17 @@ body {
     cursor: pointer;
 }
 
-/* AUTO-ROTATE BUTTON RULES*/
-
+/* AUTO-ROTATE CONTAINER*/
 #auto-rotate-btn-container{
-    /* position: absolute; */
-    
-    right: 25px;
-    bottom: 90px;
-    display: flex;                                                 /* FOR TESTING */
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 70px;
     height: 70px;
-    /* border: 1px solid #ffffff; */
 }
 
 #start-auto-rotate-btn {
     width: 40px;
-    /* animation: pulseInfo 1.2s 2 ease-in-out; */
     opacity: 30%;
     cursor: pointer;
     display: none;
@@ -152,22 +127,18 @@ body {
 #stop-auto-rotate-btn {
     width: 45px;
     opacity: 50%;
-    /* animation: pulseInfo 1.2s 2 ease-in-out; */
     cursor: pointer;
     display: flex;
 }
 
-/* BUTTON LIST RULES */
-
+/* BUTTON LIST */
 #planet-button-list {
     width: 100%;
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    
     top: 60px;
-    /* distance from bottom is 43px to align with the slide-show button on the bottom right of the screen */
 }
 
 .planet-btn {
@@ -188,8 +159,7 @@ body {
     }
 }
 
-/* INFORMATION CONTAINER RULES */
-
+/* INFORMATION CONTAINER */
 #info-container {
     position: absolute;
     width: 425px;
@@ -200,7 +170,7 @@ body {
     transform: translate(-50%,-50%);
     border: 1px solid rgb(80, 80, 80);
     border-radius: 7px;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px);
     display: none;                                   
     flex-direction: column;
     justify-content: space-around;
@@ -215,16 +185,12 @@ body {
 }
 
 #info-toggle-btn-container{
-    /* position: absolute; */
-    
-    /* right: 25px;
-    top: 100px; */
-    display: flex;                                                 /* FOR TESTING */
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 70px;
     height: 70px;
-    /* border: 1px solid #ffffff; */
+
 }
 
 #info-toggle-btn {
@@ -244,7 +210,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid #ffffff; */
     border-radius: 7px;
     width: 100%;
     padding: 10px;
@@ -264,7 +229,6 @@ body {
     color: grey;
     font-size: 20px;
     font-family: Geo;
-    /* border: 1px solid rgb(80, 80, 80); */
     border-radius: 7px;
     width: 100%;
     padding: 20px;
@@ -276,16 +240,11 @@ body {
 }
 
 #full-screen-btn-container {
-    /* position: absolute; */
-    /* right: 25px;
-    top: 30px; */
-    display: flex;                                                 /* FOR TESTING */
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 70px;
     height: 70px;
-    /* border: 1px solid #ffffff; */
-    
 }
 
 #full-screen-btn {
@@ -298,9 +257,7 @@ body {
     }
 }
 
-
 /* KEYFRAMES */
-
 @keyframes pulseInfo {
     0% { transform: scale(1.0); }
     50% { transform: scale(1.15); }
@@ -321,33 +278,41 @@ body {
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: 50px;
-  aspect-ratio: 1;
-  border: 2px solid;
-  box-sizing: border-box;
-  border-radius: 50%;
-  display: grid;
-  animation: l11 1.5s infinite linear;
-  transform-origin: 50% 80%;
-  color: #ffffff;
+  width: 80px;
+  height: 40px;
+  border-radius: 100px 100px 0 0;
+  background: 
+    linear-gradient(0deg, #0000,#fff,#0000) 70% 30%,    
+    linear-gradient(90deg,#0000,#fff,#0000) 72% 32%,
+    linear-gradient(0deg, #0000,#fff,#0000) 26% 42%,    
+    linear-gradient(90deg,#0000,#fff,#0000) 23% 44%,
+    linear-gradient(0deg, #0000,#fff,#0000) 51% 54%,    
+    linear-gradient(90deg,#0000,#fff,#0000) 51% 53% 
+    #020308;
+  background-size: 2px 10px,10px 2px;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
 }
 .loader:before,
 .loader:after {
   content: "";
-  grid-area: 1/1;
-  border: inherit;
-  border-radius: 50%;
-  animation: inherit;
-  animation-duration: 1s;
-  transform-origin: inherit;
+  position: absolute;
+  inset: 100% auto auto 20px;
+  height: 3px;
+  width: 20px;
+  background: linear-gradient(90deg,#0000,#fff);
+  transform-origin: right;
+  transform: rotate(-20deg) translate(-20px);
+  animation: l6 2s infinite;
 }
 .loader:after {
-  --s:-1;
+  inset: 100% auto auto -5px;
+  animation-delay: .75s;
 }
-@keyframes l11 {
-   100% {transform:rotate(calc(var(--s,1)*1turn))}
+@keyframes l6 {
+  100% {transform: rotate(-20deg) translate(120px)}
 }
-
 
 @media screen and (max-width: 800px) {
     #planet-button-list, 
