@@ -120,9 +120,9 @@ const slideShowModeContainer = document.getElementById('slide-show-mode-containe
 
 let slideShow;
 let slideShowMsg;
+let viewMultiplier = 1;
 
-slideShowBtn.addEventListener('click', () => {
-
+function startSlideShow() {
     control.autoRotate = true;
     camera.position.set(0, 3500, 0);
 
@@ -162,11 +162,11 @@ slideShowBtn.addEventListener('click', () => {
         if ( planetArray[count] === solarSystem ) {
             camera.position.set(0, 3500, 0);
         } else if ( planetArray[count] === sun ) {
-            camera.position.set(0, 250, 850);
+            camera.position.set(0, 450, 1050);
         } else if ( planetArray[count] === mercury || planetArray[count] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[count] === saturn || planetArray[count] === jupiter ) {
-            camera.position.set(0, 50, 150);
+            camera.position.set(0, 55, 155);
         } else if ( planetArray[count] === uranus || planetArray[count] === neptune ) {
             camera.position.set(0, 10, 75);
         } else if ( planetArray[count] === venus || planetArray[count] === earth ) {
@@ -178,6 +178,10 @@ slideShowBtn.addEventListener('click', () => {
     slideShow = setInterval(switchView, 7000);
     slideShowMsg = setTimeout(ShowSlideShowMessage, 5000);
 
+}
+
+slideShowBtn.addEventListener('click', () => {
+    startSlideShow();
 });
 
 slideShowCloseBtn.addEventListener('click', () => {
@@ -265,6 +269,12 @@ function MakeGrid() {
     });
 };
 
+function RemoveGrid() {
+    outlineArray.forEach((outline) => {
+        scene.remove(outline);  
+    });
+}
+
 MakeGrid();
 
 showGridBtn.addEventListener('click', () => {
@@ -276,9 +286,7 @@ showGridBtn.addEventListener('click', () => {
 gridCloseBtn.addEventListener('click', () => {
     gridCloseBtn.style.display = 'none';
     showGridBtn.style.display = 'flex';
-    outlineArray.forEach((outline) => {
-        scene.remove(outline);  
-    });
+    RemoveGrid();
 });
 
 const infoContainer = document.getElementById('info-container'); // change the CSS property to 'none' when finished editing
@@ -319,11 +327,11 @@ for (let i = 0; i < arrayButtonsPlanets.length; i++) {
         if ( planetArray[i] === solarSystem ) {
             camera.position.set(0, 700, 2400);
         }else if ( planetArray[i] === sun ) {
-            camera.position.set(0, 250, 850);
+            camera.position.set(0, 450, 1050);
         } else if ( planetArray[i] === mercury || planetArray[i] === mars ) {
             camera.position.set(0, 10, 35);
         } else if ( planetArray[i] === saturn || planetArray[i] === jupiter ) {
-            camera.position.set(0, 50, 150);
+            camera.position.set(0, 55, 155);
         } else if ( planetArray[i] === uranus || planetArray[i] === neptune ) {
             camera.position.set(0, 10, 75);
         } else if ( planetArray[i] === venus || planetArray[i] === earth ) {
@@ -367,6 +375,10 @@ window.onload = function() {
   var loader = document.getElementById('loader-container');
   loader.remove(); // Or loader.style.display = 'none';
 };
+
+// if (window.innerWidth <= 1000) {
+//     viewMultiplier = 2.5;
+// }
 
 
 const dragElement = document.getElementById("info-container");
