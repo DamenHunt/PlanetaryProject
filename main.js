@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './node_modules/three/build/three.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { TextGeometry } from 'three/examples/jsm/Addons.js';
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
