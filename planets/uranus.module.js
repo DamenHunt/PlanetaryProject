@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const uranusTexture = new THREE.TextureLoader().load('textures/uranus-texture.jpg');
+const uranusTexture = new THREE.TextureLoader().load('./textures/uranus-texture.jpg');
 
 function uranusMesh() {
 

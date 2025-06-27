@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const jupiterTexture = new THREE.TextureLoader().load('textures/jupiter-texture.jpg');
+const jupiterTexture = new THREE.TextureLoader().load('./textures/jupiter-texture.jpg');
 
 function jupiterMesh() {
 

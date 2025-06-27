@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const mercuryTexture = new THREE.TextureLoader().load('textures/mercury-texture.jpg');
+const mercuryTexture = new THREE.TextureLoader().load(',/textures/mercury-texture.jpg');
 
 function mercuryMesh() {
 

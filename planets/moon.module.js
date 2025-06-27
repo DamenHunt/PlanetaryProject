@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const moonTexture = new THREE.TextureLoader().load('textures/moon-texture.jpg');
+const moonTexture = new THREE.TextureLoader().load('./textures/moon-texture.jpg');
 
 function moonMesh() {
 

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const marsTexture = new THREE.TextureLoader().load('textures/mars-texture.jpg');
+const marsTexture = new THREE.TextureLoader().load('./textures/mars-texture.jpg');
 
 function marsMesh() {
 

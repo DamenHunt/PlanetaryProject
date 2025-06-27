@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const venusTexture = new THREE.TextureLoader().load('textures/venus-texture.jpg');
+const venusTexture = new THREE.TextureLoader().load('./textures/venus-texture.jpg');
 
 function venusMesh() {
 

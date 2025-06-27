@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const saturnTexture = new THREE.TextureLoader().load('textures/saturn-texture.jpg');
+const saturnTexture = new THREE.TextureLoader().load('./textures/saturn-texture.jpg');
 
 function saturnMesh() {
 

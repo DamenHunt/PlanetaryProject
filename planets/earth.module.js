@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const earthTexture = new THREE.TextureLoader().load('textures/earth-texture.jpg');
+const earthTexture = new THREE.TextureLoader().load('./textures/earth-texture.jpg');
 
 function earthMesh() {
 

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const neptuneTexture = new THREE.TextureLoader().load('textures/neptune-texture.jpg');
+const neptuneTexture = new THREE.TextureLoader().load('./textures/neptune-texture.jpg');
 
 function neptuneMesh() {
 
